@@ -210,6 +210,12 @@ static inline integrator_function_t read_function(char *other)
 
 void integrate(char **pos)
 {
+	if(!is_source_compiled)
+	{
+		fprintf(stderr, "Source is not compiled, unable to process request.\n");
+		return;
+	}
+
 	(void)pos;
 	printf("Integral Wizard : Specify integrals from outer-most to inner-most\n\n");
 
@@ -223,15 +229,13 @@ void integrate(char **pos)
 
 	int count = (int)strtol(buffer, NULL, 10);
 
-	puts("");
-
 	object_t obj = object_create(100, sizeof(double));
 
 	integrator_t *in = calloc(count, sizeof(integrator_t));
 
 	for(int i = 0; i < count; i++)
 	{
-		printf("Integral Number %d\n\n", i+1);
+		printf("\nIntegral Number %d\n\n", i+1);
 
 		in[i].method = SIMPSON_1_3;
 		in[i].context = &obj;

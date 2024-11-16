@@ -12,4 +12,4 @@ $(EXE): $(OBJ)
 	$(CC) $(CFLAGS) -c -o $@ $^
 
 clean:
-	rm -rf $(OBJ) $(EXE)
+	rm -rf external-functions-shared-object.* $(OBJ) $(EXE)

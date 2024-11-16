@@ -1,6 +1,7 @@
 #include <memory.h>
 #include <math.h>
 #include <stdio.h>
+#include <string.h>
 #include <assert.h>
 
 #define PRECISION 1E-6
