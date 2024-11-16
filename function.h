@@ -7,9 +7,11 @@
 #define PI 3.14159
 #define E 2.71828
 
+#define MAXDIM 4
+
 typedef struct vec_t
 {
-	double it[4];
+	double it[MAXDIM];
 	int dim;
 } vec_t;
 
@@ -27,8 +29,7 @@ static inline double vec_len2(vec_t a) {
 	return s;
 }
 
-typedef vec_t(*function_type_t)(object_t *o);
-typedef double(*function_limit_type_t)(object_t *o);
+typedef vec_t(*function_type_t)(vec_t);
 
 int function_source_compile(char *name);
 
@@ -37,9 +38,8 @@ void function_list_symbols();
 void *function_get(const char *func_name);
 void function_file_unload();
 
-#define ARG(o, name) *(double *)object_get(o, #name);
 #define RETURN_VEC(...) return (vec_t){.dim = sizeof((double []){__VA_ARGS__})/sizeof(double), .it = { __VA_ARGS__ }}
 
-#define FUNCTION 
+#define FUNCTION(...)
 
 #endif

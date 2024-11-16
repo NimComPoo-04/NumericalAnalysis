@@ -1,64 +1,82 @@
 #include <memory.h>
 #include <math.h>
 #include <stdio.h>
+#include <assert.h>
 
-#define PRECISION 1E-8
+#define PRECISION 1E-6
 #define VERYBIG 1E5
 
 #include "integrator.h"
 
-static vec_t trapezoidal(function_type_t func, object_t *o, double *x, double current, double next)
+static vec_t trapezoidal(integrator_t *in, integrator_function_t *func, vec_t *o, double *x, double current, double next)
 {
 	vec_t v[2] = {0};
 
 	double old_x = *x;
 
-	*x = current; v[0] = func(o);
-	*x = next;    v[1] = func(o);
+	*x = current; if (!in) v[0] = func->function(*o); else v[0] = integrator_operate(in, func);
+	*x = next;    if (!in) v[1] = func->function(*o); else v[1] = integrator_operate(in, func);
 
 	*x = old_x;
 
 	return vec_scl(vec_add(v[0], v[1]), (next - current)/2.);
 }
 
-static vec_t simson_1_3(function_type_t func, object_t *o, double *x, double current, double next)
+static vec_t simson_1_3(integrator_t *in, integrator_function_t *func, vec_t *o, double *x, double current, double next)
 {
 	vec_t v[3] = {0};
 
 	double old_x = *x;
 
-	*x = current;            v[0] = func(o);
-	*x = (current + next)/2; v[1] = func(o);
-	*x = next;               v[2] = func(o);
+	*x = current;            if (!in) v[0] = func->function(*o); else v[0] = integrator_operate(in, func);
+	*x = (current + next)/2; if (!in) v[1] = func->function(*o); else v[1] = integrator_operate(in, func);
+	*x = next;               if (!in) v[2] = func->function(*o); else v[2] = integrator_operate(in, func);
 
 	*x = old_x;
 
 	return vec_scl(vec_add(vec_add(v[0], vec_scl(v[1], 4.)), v[2]), (next - current)/6.);
 }
 
-static vec_t simson_3_8(function_type_t func, object_t *o, double *x, double current, double next)
+static vec_t simson_3_8(integrator_t *in, integrator_function_t *func, vec_t *o, double *x, double current, double next)
 {
 	vec_t v[4] = {0};
 
 	double old_x = *x;
 
-	*x = current;                 v[0] = func(o);
-	*x = (2 * current + next)/3;  v[1] = func(o);
-	*x = (current + 2 * next)/3;  v[2] = func(o);
-	*x = next;                    v[3] = func(o);
+	*x = current;                if (!in) v[0] = func->function(*o); else v[0] = integrator_operate(in, func); 
+	*x = (2 * current + next)/3; if (!in) v[1] = func->function(*o); else v[1] = integrator_operate(in, func);
+	*x = (current + 2 * next)/3; if (!in) v[2] = func->function(*o); else v[2] = integrator_operate(in, func);
+	*x = next;                   if (!in) v[3] = func->function(*o); else v[3] = integrator_operate(in, func);
 
 	*x = old_x;
 
 	return vec_scl(vec_add(vec_add(vec_add(v[0], vec_scl(v[1], 3.)), vec_scl(v[2], 3.)), v[3]), (next - current) / 8.);
 }
 
-static vec_t(*integrators[])(function_type_t, object_t *, double *, double, double) = {
+static vec_t(*integrators[])(integrator_t *in, integrator_function_t *, vec_t *, double *, double, double) = {
 	trapezoidal,
 	simson_1_3,
 	simson_3_8
 };
 
-vec_t integrator_operate(integrator_t *in, function_type_t func)
+static vec_t generate_vector(object_t *o, integrator_function_t *func)
+{
+	vec_t v = {0};
+	v.dim = func->count;
+
+	for(int i = 0; i < func->count; i++)
+	{
+		double *tmp = object_get(o, func->names[i]);
+		if(tmp == NULL)
+			fprintf(stderr, "Warning Cant find variable.%s\n", func->names[i]);
+		else
+			v.it[i] = *tmp;
+	}
+
+	return v;
+}
+
+vec_t integrator_operate(integrator_t *in, integrator_function_t *func)
 {
 	vec_t sum = {0};
 
@@ -67,8 +85,31 @@ vec_t integrator_operate(integrator_t *in, function_type_t func)
 	if(x == 0) x = object_add(in->context, in->variable, 0);
 
 	// Getting the starting and the ending points
-	double start = in->start(in->context);
-	double end = in->end(in->context);
+	vec_t v = generate_vector(in->context, &in->start);
+	double start = in->start.function(v).it[0];
+
+	v = generate_vector(in->context, &in->end);
+	double end = in->end.function(v).it[0];
+
+	// Checking if function is independent of variable
+	int vec_pos = -1;
+	if(!in->next)
+	{
+		int i = -1;
+		for(i = 0; i < func->count; i++)
+			if(strcmp(func->names[i], in->variable) == 0)
+				break;
+		vec_pos = i;
+
+		// Multiply with constant and send back very quickly
+		if(vec_pos == -1)
+		{
+			assert("SHOULD NOT HAVE COME HERE" && 0);
+			v = generate_vector(in->context, func);
+			return vec_scl(v, end - start);
+		}
+	}
+
 	double ylen = 0, dstart = 0, dend = 0;
 
 	// Swapping the limits arround if needed
@@ -91,13 +132,17 @@ vec_t integrator_operate(integrator_t *in, function_type_t func)
 		indeterminate_form = 1;
 	}
 
-	*x = start; ylen = vec_len2(func(in->context));
-
-	if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
+	if(!in->next)
 	{
-		dstart = -(start * 2. / 3.) / in->iteration;
-		start = start + start * 2. / 3.;
-		indeterminate_form = 1;
+		v = generate_vector(in->context, func);
+		*x = start; ylen = vec_len2(func->function(v));
+
+		if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
+		{
+			dstart = -(start * 2. / 3.) / in->iteration;
+			start = start + start * 2. / 3.;
+			indeterminate_form = 1;
+		}
 	}
 	
 	// Checking is end qualifies for infinite or f(start) qualifies for infinity
@@ -108,13 +153,17 @@ vec_t integrator_operate(integrator_t *in, function_type_t func)
 		indeterminate_form = 1;
 	}
 
-	*x = end; ylen = vec_len2(func(in->context));
-
-	if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
+	if(!in->next)
 	{
-		dend = (end * 2. / 3.) / in->iteration;
-		end = end / 3.;
-		indeterminate_form = 1;
+		v = generate_vector(in->context, func);
+		*x = end; ylen = vec_len2(func->function(v));
+
+		if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
+		{
+			dend = (end * 2. / 3.) / in->iteration;
+			end = end / 3.;
+			indeterminate_form = 1;
+		}
 	}
 
 	// Setting auto detection sampler system
@@ -140,9 +189,14 @@ vec_t integrator_operate(integrator_t *in, function_type_t func)
 		{
 			// If there exists a internal intgrator execute on that before the function
 			if(in->next)
-				sum = vec_add(integrator_operate(in->next, func), sum);
+			{
+				sum = vec_add(integrators[in->method](in->next, func, NULL, x, *x, *x + dx), sum);
+			}
 			else
-				sum = vec_add(integrators[in->method](func, in->context, x, *x, *x + dx), sum);
+			{
+				sum = vec_add(integrators[in->method](NULL, func,
+							&v, v.it + vec_pos, *x, *x + dx), sum);
+			}
 
 			*x += dx;
 		}
@@ -172,11 +226,11 @@ void integrator_table_dump(int step,
 		double end,
 		vec_t area)
 {
-	printf("%16d, %16s, %16lf, %16lf, %16lf, ", step, var, h, start, end);
+	printf("%-16d  %-16s  %-16lf  %-16lf  %-16lf  ", step, var, h, start, end);
 	printf("(");
 	for(int i = 0; i < area.dim; i++)
 	{
-		printf("%10.6lf", area.it[i]);
+		printf("%lf", area.it[i]);
 		if(i != area.dim - 1)
 			printf(", ");
 	}

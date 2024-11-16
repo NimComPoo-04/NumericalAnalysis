@@ -1,0 +1,7 @@
+*.o
+cmpl/*
+*.exe
+*.zip
+*.dll
+*.so
+*.def

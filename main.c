@@ -25,11 +25,13 @@ static object_t global_object;
 const char *help_message =
 "get_pointer     function_name                         -- gets the location of the pointer\n"
 "list_functions                                        -- lists all the functions\n"
-"call_function   function namevariable_name value ...  -- allows you to call the function multiple variable value pairs is possible\n"
-"call_limits     function namevariable_name value ...  -- same as call_function but for functions with double return instead of vec_t\n"
+"call_function   function value ...                    -- allows you to call the function with arguments\n"
 "integrate                                             -- starts up a integration wizard to aid integration\n"
 "reload                                                -- reloads the binary incase changes have been made\n"
-"quit                                                  -- quits out of the program\n";
+"quit                                                  -- quits out of the program\n"
+"\n"
+"NOTE: For now there is no concept of scope, so even function argument variable names need to be unique. The integrator relies on these variables for its operations\n"
+;
 
 int main(int argc, char *argv[])
 {
@@ -63,7 +65,6 @@ int main(int argc, char *argv[])
 	command_register(list_functions);
 	command_register(reload);
 	command_register(call_function);
-	command_register(call_limits);
 	command_register(integrate);
 	command_register(quit);
 
@@ -162,22 +163,16 @@ void call_function(char **pos)
 		return;
 	}
 
+	vec_t vin = {0};
 	while(which.len != 0)
 	{
 		which = tokenize_next(pos);
 		which.start[which.len] = 0;
-		double *x = (double *)object_get(&global_object, which.start);
-		if(!x)
-			x = (double *)object_add(&global_object, which.start, 0);
-		which.start[which.len] = ' ';
-
-		which = tokenize_next(pos);
-		which.start[which.len] = 0;
-		*x = strtod(which.start, NULL);
+		vin.it[vin.dim++] = strtod(which.start, NULL);
 		which.start[which.len] = ' ';
 	}
 
-	vec_t v = func(&global_object);
+	vec_t v = func(vin);
 
 	printf("result = ");
 	for(int i = 0; i < v.dim; i++)
@@ -185,51 +180,32 @@ void call_function(char **pos)
 	puts("");
 }
 
-void call_limits(char **pos)
-{
-	if(!is_source_compiled)
-	{
-		fprintf(stderr, "Source is not compiled, unable to process request.\n");
-		return;
-	}
-
-	tok_t which = tokenize_next(pos);
-
-	which.start[which.len] = 0;
-	function_limit_type_t func = function_get(which.start);
-	which.start[which.len] = ' ';
-
-	if(func == NULL)
-	{
-		fprintf(stderr, "Function not defined.\n");
-		return;
-	}
-
-	while(which.len != 0)
-	{
-		which = tokenize_next(pos);
-		which.start[which.len] = 0;
-		double *x = (double *)object_get(&global_object, which.start);
-		if(!x)
-			x = (double *)object_add(&global_object, which.start, 0);
-		which.start[which.len] = ' ';
-
-		which = tokenize_next(pos);
-		which.start[which.len] = 0;
-		*x = strtod(which.start, NULL);
-		which.start[which.len] = ' ';
-	}
-
-	double v = func(&global_object);
-
-	printf("result = %lf\n", v);
-}
-
 
 void quit(char **pos)
 {
 	(void)pos;
 	should_quit_program = 1;
+}
+
+static inline integrator_function_t read_function(char *other)
+{
+	integrator_function_t in = {0};
+
+	tok_t tok = tokenize_next(&other);
+	tok.start[tok.len] = 0;
+	in.function = function_get(tok.start);
+	tok.start[tok.len] = ' ';
+
+	do {
+		tok = tokenize_next(&other);
+		if(tok.len <= 0)
+			break;
+		tok.start[tok.len] = 0;
+		strcpy(in.names[in.count++], tok.start);
+		tok.start[tok.len] = ' ';
+	} while(tok.len > 0 && in.count < MAXDIM);
+
+	return in;
 }
 
 void integrate(char **pos)
@@ -253,65 +229,86 @@ void integrate(char **pos)
 
 	integrator_t *in = calloc(count, sizeof(integrator_t));
 
-
 	for(int i = 0; i < count; i++)
 	{
 		printf("Integral Number %d\n\n", i+1);
 
 		in[i].method = SIMPSON_1_3;
 		in[i].context = &obj;
-		in[i].samples = 0;
-		in[i].iteration = 1000;
 		in[i].table_dump = integrator_table_dump;
 
-		printf("Integration Variable = ");
+		printf("Integration Variable                = ");
 		fgets(buffer, sizeof buffer, stdin);
 		len = strlen(buffer);
 		buffer[len - 1] = 0;
 
 		strncpy(in[i].variable, buffer, len);
 
-		printf("Starting limit Function = ");
+		printf("Starting limit Function (with args) = ");
 		fgets(buffer, sizeof buffer, stdin);
 		len = strlen(buffer);
 		buffer[len - 1] = 0;
 
-		in[i].start = function_get(buffer);
+		in[i].start = read_function(buffer);
+		if(!in[i].start.function)
+		{
+			fprintf(stderr, "Function for integration not defined.\n");
+			goto GONE;
+		}
 
-
-		printf("Ending   limit Function = ");
+		printf("Ending limit Function (with args)   = ");
 		fgets(buffer, sizeof buffer, stdin);
 		len = strlen(buffer);
 		buffer[len - 1] = 0;
 
-		in[i].end = function_get(buffer);
+		in[i].end = read_function(buffer);
+		if(!in[i].end.function)
+		{
+			fprintf(stderr, "Function for integration not defined.\n");
+			goto GONE;
+		}
 
+		printf("Number Of Samples                   = ");
+		fgets(buffer, sizeof buffer, stdin);
+		len = strlen(buffer);
+		buffer[len - 1] = 0;
 
-		in[i].next = i == count - 1 ? NULL : in + i + 1;
+		in[i].samples = (int)strtol(buffer, 0, 10);
+
+		printf("Maximum Iterations                  = ");
+		fgets(buffer, sizeof buffer, stdin);
+		len = strlen(buffer);
+		buffer[len - 1] = 0;
+
+		in[i].iteration = (int)strtol(buffer, 0, 10);
+		if(in[i].iteration <= 0) in[i].iteration = 1000;
+
+		in[i].next = (i == count - 1 ? NULL : in + i + 1);
 	}
 
-	printf("Integrated Function = ");
+	printf("Integrated Function (with args)     = ");
 	fgets(buffer, sizeof buffer, stdin);
 	len = strlen(buffer);
 	buffer[len - 1] = 0;
 
-	function_type_t func = function_get(buffer);
+	integrator_function_t func = read_function(buffer);
 
-	if(!func)
+	if(!func.function)
 	{
 		fprintf(stderr, "Function for integration not defined.\n");
-		return;
+		goto GONE;
 	}
 
 	puts("");
-	printf("%16s, %16s, %16s, %16s, %16s, %16s\n", "step", "variable", "h", "start", "end", "result");
-	vec_t v = integrator_operate(in, func);
+	printf("%-16s  %-16s  %-16s  %-16s  %-16s  %-16s\n", "step", "variable", "h", "start", "end", "result");
+	vec_t v = integrator_operate(in, &func);
 
 	printf("\nfinal result = ");
 	for(int i = 0; i < v.dim; i++)
 		printf("%lf ", v.it[i]);
 	puts("");
 
+GONE:
 	free(in);
 	object_destroy(&obj);
 }
