@@ -16,7 +16,9 @@ void ___command_register(const char *key, void(*)(char **pos));
 void(*command_get(const char *key))(char **pos) ;
 void commands_dinit();
 
-#define command_register(some) ___command_register(#some, some)
+char *command_readline_stdin();
+
+#define command_register(some) ___command_register(#some, cmd_##some)
 
 #endif
 

@@ -1,15 +1,26 @@
 CC = gcc
 CFLAGS = -Wall -Wextra -Wno-unused-variable -ggdb -O0
 
-SRC = args.c  function.c  integrator.c  main.c  object.c
+SRC = main.c args.c  function.c  integrator.c  object.c  plot.c
 OBJ = $(patsubst %.c, %.o, $(SRC))
 EXE = funcs.exe
 
-$(EXE): $(OBJ)
-	$(CC) $(CFLAGS) -o $@ $^ -lm
+ifeq ($(OS), Windows_NT)
+	LIB = -L lib/raylib-5.0_win64_mingw-w64/lib -lraylib -lgdi32 -lwinmm
+	INC = -I lib/raylib-5.0_win64_mingw-w64/include
+else
+	LIB = -L lib/raylib-5.0_linux_amd64/lib -lraylib -lm
+	INC = -I lib/raylib-5.0_linux_amd64/include
+endif
+
+INC += -I lib/Crossline-1.0/
+SRC += lib/Crossline-1.0/crossline.c
+
+$(EXE): $(OBJ) $(OBJ_EXTENDED)
+	$(CC) $(CFLAGS) -o $@ $^ $(LIB)
 
 %.o: %.c
-	$(CC) $(CFLAGS) -c -o $@ $^
+	$(CC) $(CFLAGS) -c -o $@ $^ $(INC)
 
 clean:
 	rm -rf external-functions-shared-object.* $(OBJ) $(EXE)

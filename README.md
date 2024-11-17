@@ -1,5 +1,4 @@
+Thanks to,
 
-1. Enter expression freely without thinking about how it would actually work.
-2. Setup Subdivisions and cache out the function so we don't need to run the ast over and over.
-3. Integrate over the system using this cached version of the function.
-
+1. @jcwangxp for the simple cool input library : https://github.com/jcwangxp/Crossline
+1. @raysan5 for the awsome drawing library : https://github.com/raysan5/raylib

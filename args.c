@@ -1,5 +1,10 @@
 #include <ctype.h>
 #include <stdint.h>
+#include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
+
+#include "integrator.h"
 #include "args.h"
 
 tok_t tokenize_next(char **buffer)
@@ -44,4 +49,17 @@ void(*command_get(const char *key))(char **pos)
 void commands_dinit()
 {
 	object_destroy(&command_listings);
+}
+
+#define BUFFSIZE 1024
+char *command_readline_stdin()
+{
+	static char buffer[BUFFSIZE];
+	int len;
+
+	fgets(buffer, sizeof buffer, stdin);
+	len = strlen(buffer);
+	buffer[len - 1] = 0;
+
+	return buffer;
 }
