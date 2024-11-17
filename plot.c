@@ -6,26 +6,6 @@
 #include <raylib.h>
 #include <raymath.h>
 
-void plot3d(function_type_t func, int count);
-void plot2d(function_type_t func, int count) { }
-
-void plot(function_type_t func, int count)
-{
-	if(count ==  2)
-	{
-		plot3d(func, count);
-	}
-	else if(count == 1)
-	{
-		plot2d(func, count);
-	}
-	else
-	{
-		fprintf(stderr, "Can't plot this type of function right now sorry. %d\n", count);
-		return;
-	}
-}
-
 // FIXME: hardcoding the value 20 not good for health
 void draw_grid(int samples, float spacing)
 {
@@ -69,7 +49,7 @@ void draw_points(function_type_t func, Vector3 Origin, Vector3 Zoom, int samples
 
 			double out = func(in).it[0] * Zoom.z;
 
-			if(out > hlfsam || out < -hlfsam)
+			if(out > hlfsam * spacing || out < -hlfsam * spacing)
 				continue;
 
 			Vector3 p = { j * spacing, out, i * spacing };
@@ -79,7 +59,7 @@ void draw_points(function_type_t func, Vector3 Origin, Vector3 Zoom, int samples
 	}
 }
 
-void plot3d(function_type_t func, int count)
+void plot(function_type_t func)
 {
 	Camera cam = {
 		.position = {0, 30.0f, 30.0f},

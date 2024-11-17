@@ -5,7 +5,7 @@ static const char *help_message =
 "list                                  -- lists all the functions\n"
 "call       function value ...         -- allows you to call the function with arguments\n"
 "integrate                             -- starts up a integration wizard to aid integration\n"
-"plot	    function num_of_inputs     -- launches a window for visualization of 1->1 or 2->1 graphs\n"
+"plot	    function                   -- launches a window for visualization graphs\n"
 "reload                                -- reloads the binary incase changes have been made\n"
 "help                                  -- prints a help message\n"
 "quit                                  -- quits out of the program\n\n" ;
@@ -210,12 +210,7 @@ static void cmd_plot(char **pos)
 	function_type_t func = function_get(t.start);
 	t.start[t.len] = ' ';
 
-	t = tokenize_next(pos);
-	t.start[t.len] = 0;
-	int count = (int)strtol(t.start, NULL, 10);
-	t.start[t.len] = ' ';
-
-	plot(func, count);
+	plot(func);
 }
 
 static void cmd_help(char **pos)
