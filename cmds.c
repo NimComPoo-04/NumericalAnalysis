@@ -151,7 +151,7 @@ static void cmd_integrate(char **pos)
 		printf("\nIntegral Number %d\n\n", i+1);
 
 		printf("Integration Variable                = ");
-		strncpy(in[i].variable, command_readline_stdin(), len);
+		strcpy(in[i].variable, command_readline_stdin());
 
 		printf("Starting limit Function (with args) = ");
 		in[i].start = read_function(command_readline_stdin());

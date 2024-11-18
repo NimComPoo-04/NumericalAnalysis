@@ -6,6 +6,8 @@
 #include <raylib.h>
 #include <raymath.h>
 
+static Vector3 Y = {0, 1, 0};
+
 // FIXME: hardcoding the value 20 not good for health
 void draw_grid(int samples, float spacing)
 {
@@ -47,7 +49,7 @@ void draw_points(function_type_t func, Vector3 Origin, Vector3 Zoom, int samples
 				0, 0
 			}};
 
-			double out = func(in).it[0] * Zoom.z;
+			double out = func(in).it[0] * Zoom.z + Origin.z;
 
 			if(out > hlfsam * spacing || out < -hlfsam * spacing)
 				continue;
@@ -55,6 +57,63 @@ void draw_points(function_type_t func, Vector3 Origin, Vector3 Zoom, int samples
 			Vector3 p = { j * spacing, out, i * spacing };
 
 			DrawPoint3D(p, MAROON);
+		}
+	}
+}
+
+void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samples, float spacing)
+{
+	int hlfsam = samples/2;
+
+	for(int i = -hlfsam; i <= hlfsam; i++)
+	{
+		for(int j = -hlfsam; j <= hlfsam; j++)
+		{
+			Vector3 p[4] = {0};
+
+			for(int k = 0; k < 4; k++)
+			{
+				vec_t in = {.it = {
+					Lerp(Origin.x - Zoom.x, Origin.x + Zoom.x, Normalize(j + (k == 1 || k == 2), -hlfsam, hlfsam)),
+					Lerp(Origin.y - Zoom.y, Origin.y + Zoom.y, Normalize(i + (k == 0 || k == 1), -hlfsam, hlfsam)),
+					0, 0
+				}};
+
+				double out = func(in).it[0] * Zoom.z + Origin.z;
+				out = Clamp(out, -hlfsam * spacing - 0.01, hlfsam * spacing + 0.01);
+
+				p[k] = (Vector3){ (j + (k == 1 || k == 2)) * spacing, out, (i + (k == 0 || k == 1)) * spacing };
+			}
+
+			Vector3 normal = Vector3Normalize(Vector3CrossProduct(Vector3Subtract(p[0], p[2]), Vector3Subtract(p[0], p[3])));
+			float t = Vector3DotProduct(normal, Y);
+
+			Color col1 = ColorBrightness(SKYBLUE, t);
+			Color col2 = ColorBrightness(BLUE, t);
+
+			int count = 0;
+
+			count += p[0].y < -hlfsam * spacing || p[0].y > hlfsam * spacing;
+			count += p[1].y < -hlfsam * spacing || p[1].y > hlfsam * spacing;
+			count += p[2].y < -hlfsam * spacing || p[2].y > hlfsam * spacing;
+
+			if(count < 3)
+			{
+				DrawTriangle3D(p[0], p[1], p[2], col1);
+				DrawTriangle3D(p[2], p[1], p[0], col2);
+			}
+
+			count = 0;
+
+			count += p[0].y < -hlfsam * spacing || p[0].y > hlfsam * spacing;
+			count += p[3].y < -hlfsam * spacing || p[3].y > hlfsam * spacing;
+			count += p[2].y < -hlfsam * spacing || p[2].y > hlfsam * spacing;
+
+			if(count < 3)
+			{
+				DrawTriangle3D(p[0], p[2], p[3], col1);
+				DrawTriangle3D(p[3], p[2], p[0], col2);
+			}
 		}
 	}
 }
@@ -72,59 +131,74 @@ void plot(function_type_t func)
 	Vector3 cubePosition = {0, 0, 0};
 
 	SetTraceLogLevel(LOG_ERROR);
+	SetTargetFPS(60);
 
 	InitWindow(800, 800, "...");
 
-	Vector3 rotation = {0};
-	Vector3 Y = {0, 1, 0};
+	Vector2 rotation = {0};
 
 	static char textbuffer[1024];
 
 	Vector3 Origin = {0};
 	// Zoom is weird, x and y inreasing means to zoom out, but z its the oppsite
 	Vector3 Zoom = {1, 1, 1};
-	int samples = 20;
+	int samples = 50;
 	float spacing = 1.f;
 
 	while(!WindowShouldClose())
 	{
 		float dt = GetFrameTime();
 
-		// Camera Rotation and things
-		if(IsKeyPressed(KEY_UP))		rotation.z = 0.5f;
-		else if(IsKeyPressed(KEY_DOWN))	        rotation.z = -0.5f;
+		// Rotation of the visibility cube with mouse
+		if(IsMouseButtonDown(MOUSE_LEFT_BUTTON))
+		{
+			rotation = Vector2Scale(Vector2Normalize(GetMouseDelta()), 0.05);
+			cam.position = Vector3Transform(cam.position, MatrixRotateY(-rotation.x));
 
-		if(IsKeyPressed(KEY_LEFT))		rotation.y = -0.5f;
-		else if(IsKeyPressed(KEY_RIGHT))	rotation.y = 0.5f;
-
-		if(IsKeyReleased(KEY_UP) || IsKeyReleased(KEY_DOWN))
-			rotation.z = 0.f;
-
-		if(IsKeyReleased(KEY_LEFT) || IsKeyReleased(KEY_RIGHT))
-			rotation.y = 0.f;
-
-		cam.position = Vector3Transform(cam.position, MatrixRotateY(rotation.y * dt));
-		cam.position = Vector3Transform(cam.position,
-				MatrixRotate(Vector3CrossProduct(cam.position, Y), rotation.z * dt));
-
-		if(IsKeyPressed(KEY_LEFT_SHIFT) && IsKeyPressed(KEY_U)) samples -= 2;
+			Vector3 axis = Vector3CrossProduct(cam.position, Y);
+			cam.position = Vector3Transform(cam.position, MatrixRotate(axis, rotation.y));
+		}
 
 		// Increasing samples
 		if(IsKeyPressed(KEY_U)) samples += 2;
 
 		spacing = 20.f / samples;
 
-		if(IsKeyPressed(KEY_F)) Zoom.x += 0.5;
-		if(IsKeyPressed(KEY_G)) Zoom.y += 0.5;
-		if(IsKeyPressed(KEY_H)) Zoom.z += 0.5;
+		float scroll = GetMouseWheelMove();
+		if(scroll != 0)
+		{
+			if(IsKeyDown(KEY_LEFT_SHIFT) || IsKeyDown(KEY_RIGHT_SHIFT))
+			{
+				samples += scroll;
+				if(samples < 20) samples = 20;
+			}
+			else
+			{
+				if(IsKeyDown(KEY_X))      Zoom.x += scroll * 0.5;
+				else if(IsKeyDown(KEY_Y)) Zoom.y += scroll * 0.5;
+				else if(IsKeyDown(KEY_Z)) Zoom.z += scroll * 0.5;
+				else Zoom = Vector3AddValue(Zoom, scroll * 0.5);
+
+				Zoom = Vector3Max(Zoom, Vector3One());
+			}
+		}
+
+		// Changing origin
+		if(IsKeyDown(KEY_A)) Origin.x += 0.1;
+		if(IsKeyDown(KEY_D)) Origin.x -= 0.1;
+		if(IsKeyDown(KEY_W)) Origin.y += 0.1;
+		if(IsKeyDown(KEY_S)) Origin.y -= 0.1;
+		if(IsKeyDown(KEY_Q)) Origin.z += 0.1;
+		if(IsKeyDown(KEY_E)) Origin.z -= 0.1;
 	
+
+		// Drawing out the graph
 		BeginDrawing();
 			ClearBackground(BLACK);
 			BeginMode3D(cam);
-				DrawCubeWires(Vector3Zero(), samples * spacing,
-						samples * spacing, samples * spacing, ORANGE);
+				DrawCubeWires(Vector3Zero(), 20, 20, 20, ORANGE);
 				draw_grid(10, 2.f);
-				draw_points(func, Origin, Zoom, samples, spacing);
+				draw_triangles(func, Origin, Zoom, samples, spacing);
 			EndMode3D();
 
 			// Writing out information
@@ -133,6 +207,11 @@ void plot(function_type_t func)
 
 			sprintf(textbuffer, "Zoom = (%f %f %f)", Zoom.x, Zoom.y, Zoom.z);
 			DrawText(textbuffer, 5, 23, 20, WHITE);
+
+			sprintf(textbuffer, "Samples = %d", samples);
+			DrawText(textbuffer, 5, 43, 20, WHITE);
+
+	//		DrawFPS(5, 63);
 
 		EndDrawing();
 	}
