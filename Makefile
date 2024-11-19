@@ -1,5 +1,6 @@
 CC = gcc
-CFLAGS = -Wall -Wextra -Wno-unused-variable -ggdb -O0
+# CFLAGS = -Wall -Wextra -Wno-unused-variable -ggdb -O0
+CFLAGS = -O3
 
 SRC = main.c args.c  function.c  integrator.c  object.c  plot.c
 OBJ = $(patsubst %.c, %.o, $(SRC))

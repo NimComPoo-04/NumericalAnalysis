@@ -70,6 +70,7 @@ void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samp
 		for(int j = -hlfsam; j <= hlfsam; j++)
 		{
 			Vector3 p[4] = {0};
+			Vector3 mid = {0};
 
 			for(int k = 0; k < 4; k++)
 			{
@@ -83,13 +84,18 @@ void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samp
 				out = Clamp(out, -hlfsam * spacing - 0.01, hlfsam * spacing + 0.01);
 
 				p[k] = (Vector3){ (j + (k == 1 || k == 2)) * spacing, out, (i + (k == 0 || k == 1)) * spacing };
+
+				mid = Vector3Add(mid, p[k]);
 			}
+
+			mid = Vector3Scale(mid, 4);
+			float f = Normalize(mid.y, -hlfsam * spacing, hlfsam * spacing);
 
 			Vector3 normal = Vector3Normalize(Vector3CrossProduct(Vector3Subtract(p[0], p[2]), Vector3Subtract(p[0], p[3])));
 			float t = Vector3DotProduct(normal, Y);
 
-			Color col1 = ColorBrightness(SKYBLUE, t);
-			Color col2 = ColorBrightness(BLUE, t);
+			Color col1 = ColorBrightness(DARKBLUE, t);
+			Color col2 = ColorBrightness(DARKGRAY, t);
 
 			int count = 0;
 
