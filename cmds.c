@@ -89,7 +89,7 @@ static void cmd_call(char **pos)
 	printf("result = ");
 	for(int i = 0; i < v.dim; i++)
 		printf("%lf ", v.it[i]);
-	puts("");
+	puts("\n");
 }
 
 
@@ -143,7 +143,7 @@ static void cmd_integrate(char **pos)
 
 	for(int i = 0; i < count; i++)
 	{
-		in[i].method = SIMPSON_1_3;
+		in[i].method = WEDDLES; 
 		in[i].context = &obj;
 		in[i].table_dump = integrator_table_dump;
 		in[i].next = (i == count - 1 ? NULL : in + i + 1);

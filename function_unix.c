@@ -48,11 +48,12 @@ int function_source_compile(char *name)
 
 	char *tccargs[] = {
 		tccpath,
-		"-Wall", "-g", "-O2", "-rdynamic", "-shared",			// common flags
+		"-Wall", "-g", "-rdynamic", "-shared",			// common flags
 		"-o", function_file_name,				// output file
 		"-I", ".", "-I", "./cmpl/tinycc/include",
 		"-L", "./cmpl/tinycc",
 		name, "function.c", "object.c", "integrator.c",		// important files
+		"special_integrals.c",
 		"-lm", 0
 	};
 

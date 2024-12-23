@@ -1,0 +1,14 @@
+plot function
+integrate
+2
+y
+limit_start_outer
+limit_end_outer
+
+
+x
+limit_start_inner y
+limit_end_inner y
+
+
+function x y

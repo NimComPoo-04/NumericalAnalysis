@@ -5,6 +5,7 @@
 #include <string.h>
 
 static char *function_file_source = NULL;
+object_t *function_default_context = NULL;
 
 void function_read_source(const char *name)
 {

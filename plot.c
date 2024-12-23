@@ -81,7 +81,9 @@ void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samp
 				}};
 
 				double out = func(in).it[0] * Zoom.z + Origin.z;
-				out = Clamp(out, -hlfsam * spacing - 0.01, hlfsam * spacing + 0.01);
+				if(isnan(out) || out < -hlfsam * spacing - 0.1 || out > hlfsam * spacing + 0.1)
+					goto SKIP;
+	//			out = Clamp(out, -hlfsam * spacing - 0.01, hlfsam * spacing + 0.01);
 
 				p[k] = (Vector3){ (j + (k == 1 || k == 2)) * spacing, out, (i + (k == 0 || k == 1)) * spacing };
 
@@ -103,7 +105,7 @@ void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samp
 			count += p[1].y < -hlfsam * spacing || p[1].y > hlfsam * spacing;
 			count += p[2].y < -hlfsam * spacing || p[2].y > hlfsam * spacing;
 
-			if(count < 3)
+			if(count < 4)
 			{
 				DrawTriangle3D(p[0], p[1], p[2], col1);
 				DrawTriangle3D(p[2], p[1], p[0], col2);
@@ -115,11 +117,12 @@ void draw_triangles(function_type_t func, Vector3 Origin, Vector3 Zoom, int samp
 			count += p[3].y < -hlfsam * spacing || p[3].y > hlfsam * spacing;
 			count += p[2].y < -hlfsam * spacing || p[2].y > hlfsam * spacing;
 
-			if(count < 3)
+			if(count < 4)
 			{
 				DrawTriangle3D(p[0], p[2], p[3], col1);
 				DrawTriangle3D(p[3], p[2], p[0], col2);
 			}
+SKIP:
 		}
 	}
 }
@@ -139,7 +142,7 @@ void plot(function_type_t func)
 	SetTraceLogLevel(LOG_ERROR);
 	SetTargetFPS(60);
 
-	InitWindow(800, 800, "...");
+	InitWindow(1000, 1000, "...");
 
 	Vector2 rotation = {0};
 
@@ -148,8 +151,9 @@ void plot(function_type_t func)
 	Vector3 Origin = {0};
 	// Zoom is weird, x and y inreasing means to zoom out, but z its the oppsite
 	Vector3 Zoom = {1, 1, 1};
-	int samples = 50;
-	float spacing = 1.f;
+
+	int sides = 20;
+	int samples = 20;
 
 	while(!WindowShouldClose())
 	{
@@ -166,9 +170,9 @@ void plot(function_type_t func)
 		}
 
 		// Increasing samples
-		if(IsKeyPressed(KEY_U)) samples += 2;
+	//	if(IsKeyPressed(KEY_U)) samples += 2;
 
-		spacing = 20.f / samples;
+		float spacing = 1. * sides / samples;
 
 		float scroll = GetMouseWheelMove();
 		if(scroll != 0)
@@ -180,12 +184,12 @@ void plot(function_type_t func)
 			}
 			else
 			{
-				if(IsKeyDown(KEY_X))      Zoom.x += scroll * 0.5;
-				else if(IsKeyDown(KEY_Y)) Zoom.y += scroll * 0.5;
-				else if(IsKeyDown(KEY_Z)) Zoom.z += scroll * 0.5;
-				else Zoom = Vector3AddValue(Zoom, scroll * 0.5);
+				if(IsKeyDown(KEY_X))      Zoom.x += scroll * 0.05;
+				else if(IsKeyDown(KEY_Y)) Zoom.y += scroll * 0.05;
+				else if(IsKeyDown(KEY_Z)) Zoom.z += scroll * 0.05;
+				else Zoom = Vector3AddValue(Zoom, scroll * 0.05);
 
-				Zoom = Vector3Max(Zoom, Vector3One());
+	//			Zoom = Vector3Max(Zoom, Vector3One());
 			}
 		}
 
@@ -202,8 +206,8 @@ void plot(function_type_t func)
 		BeginDrawing();
 			ClearBackground(BLACK);
 			BeginMode3D(cam);
-				DrawCubeWires(Vector3Zero(), 20, 20, 20, ORANGE);
-				draw_grid(10, 2.f);
+				DrawCubeWires(Vector3Zero(), sides, sides, sides, ORANGE);
+				draw_grid(sides/2.f, 2.f);
 				draw_triangles(func, Origin, Zoom, samples, spacing);
 			EndMode3D();
 
@@ -217,7 +221,7 @@ void plot(function_type_t func)
 			sprintf(textbuffer, "Samples = %d", samples);
 			DrawText(textbuffer, 5, 43, 20, WHITE);
 
-	//		DrawFPS(5, 63);
+			DrawFPS(5, 63);
 
 		EndDrawing();
 	}

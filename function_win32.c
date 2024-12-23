@@ -43,7 +43,8 @@ int function_source_compile(char *name)
 
 	char commandline[1024];
 
-	sprintf(commandline, "%s -Wall -g -O2 -rdynamic -shared -o %s -I . %s -L %s %s"
+	sprintf(commandline, "%s -Wall -g -rdynamic -shared -o %s -I . %s -L %s %s"
+			     " special_integrals.c"
 			     " function.c object.c integrator.c",
 			tccpath, function_file_name, tccinclude, tcclib, name);
 

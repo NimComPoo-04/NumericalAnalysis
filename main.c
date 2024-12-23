@@ -8,9 +8,11 @@
 #include "integrator.h"
 #include "args.h"
 #include "plot.h"
+#include "object.h"
 
 #include "cmds.c"
 
+extern object_t *function_default_context;
 int main(int argc, char *argv[])
 {
 	static char buffer[1024];
@@ -34,6 +36,9 @@ int main(int argc, char *argv[])
 		fprintf(stderr, "Problem in loading file %s\n", argv[1]);
 		return -2;
 	}
+
+	object_t tmp = object_create(100, sizeof(double));
+	function_default_context = &tmp;
 
 	command_init();
 
@@ -69,4 +74,6 @@ int main(int argc, char *argv[])
 
 	fprintf(stderr, "Goodbye.\n");
 	commands_dinit();
+
+	object_destroy(function_default_context);
 }

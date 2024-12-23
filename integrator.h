@@ -17,6 +17,7 @@ typedef struct integrator_t
 		TRAPIZOIDAL,		// 1
 		SIMPSON_1_3,		// 2
 		SIMPSON_3_8,		// 3
+		WEDDLES,		// 3
 	} method;
 
 	object_t *context;
@@ -42,6 +43,8 @@ void integrator_table_dump(int step, const char *var, double h, double start, do
 
 #define INTEGRATOR_UNKOWN_SAMPLES_INIT(cntx, var, str, edd) { .method = SIMPSON_1_3, .context = cntx, .variable = var,\
 	.samples = 10, .iteration = 1E3, .next = NULL, .table_dump = integrator_table_dump, .start = str, .end = edd}
+
+#define INTEGRATOR(me, va, st, en) { me, function_default_context, va, 1000, 1000, st, end, NULL, NULL}
 
 
 #endif

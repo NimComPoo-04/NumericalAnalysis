@@ -54,10 +54,38 @@ static vec_t simson_3_8(integrator_t *in, integrator_function_t *func, vec_t *o,
 	return vec_scl(vec_add(vec_add(vec_add(v[0], vec_scl(v[1], 3.)), vec_scl(v[2], 3.)), v[3]), (next - current) / 8.);
 }
 
+static vec_t weddles(integrator_t *in, integrator_function_t *func, vec_t *o, double *x, double current, double next)
+{
+	double coffs[] = {1, 5, 1, 6, 1, 5, 1};
+	int count = 6;
+
+	vec_t out = {0}, v = {0};
+
+	double outgoing_coff = 0.3 * (next - current)/count;
+
+	double old_x = *x;
+
+	for(int i = 0; i <= count; i++)
+	{
+		*x = (current * (count - i) + next * i) / count;
+		if (!in)
+			v = func->function(*o);
+		else
+		       	v = integrator_operate(in, func); 
+
+		out = vec_add(out, vec_scl(v, coffs[i]));
+	}
+
+	*x = old_x;
+
+	return vec_scl(out, outgoing_coff);
+}
+
 static vec_t(*integrators[])(integrator_t *in, integrator_function_t *, vec_t *, double *, double, double) = {
 	trapezoidal,
 	simson_1_3,
-	simson_3_8
+	simson_3_8,
+	weddles
 };
 
 static vec_t generate_vector(object_t *o, integrator_function_t *func)
@@ -140,8 +168,8 @@ vec_t integrator_operate(integrator_t *in, integrator_function_t *func)
 
 		if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
 		{
-			dstart = -(start * 2. / 3.) / in->iteration;
-			start = start + start * 2. / 3.;
+			dstart = -1. / in->iteration;
+			start += 1;
 			indeterminate_form = 1;
 		}
 	}
@@ -161,17 +189,17 @@ vec_t integrator_operate(integrator_t *in, integrator_function_t *func)
 
 		if(isnan(ylen) || isinf(ylen) || fabs(ylen) > VERYBIG)
 		{
-			dend = (end * 2. / 3.) / in->iteration;
-			end = end / 3.;
+			dend = 1. / in->iteration;
+			end -= 1;
 			indeterminate_form = 1;
 		}
 	}
 
-	// Setting auto detection sampler system
-	int dsamples = 2;
-	int samples = in->samples <= 0 ? 100 : in->samples;
-
 	int steps = 1;
+
+	// Setting auto detection sampler system
+	int samples = in->samples <= 0 ? 100 : in->samples;
+	double dsamples = samples/(end - start);
 
 	vec_t old_sum = {0};
 
@@ -184,7 +212,7 @@ vec_t integrator_operate(integrator_t *in, integrator_function_t *func)
 		*x = start;
 
 		// Incrementing the number of samples
-		samples = samples * dsamples + (dend - dstart);
+		samples = steps * 2 + dsamples * (end - start);
 
 		while(*x < end)
 		{
@@ -212,12 +240,13 @@ vec_t integrator_operate(integrator_t *in, integrator_function_t *func)
 		end += dend;
 
 		// If the current sum and old sum is smaller than precision we are done
-		if(vec_len2(vec_sub(sum, old_sum)) < PRECISION * PRECISION) break;
+		double len = vec_len2(vec_sub(sum, old_sum));
+		if(isnan(len) || isinf(len) || len < PRECISION * PRECISION) break;
 		else old_sum = sum;
 
 	} while((in->samples <= 0 || indeterminate_form) && in->iteration);
 
-	return vec_scl(sum, mult);
+	return vec_scl(old_sum, mult);
 }
 
 void integrator_table_dump(int step,
@@ -227,7 +256,7 @@ void integrator_table_dump(int step,
 		double end,
 		vec_t area)
 {
-	printf("%-16d  %-16s  %-16lf  %-16lf  %-16lf  ", step, var, h, start, end);
+	printf("%-3d  %-8s  %-16lf  %-16lf  %-16lf  ", step, var, h, start, end);
 	printf("(");
 	for(int i = 0; i < area.dim; i++)
 	{
