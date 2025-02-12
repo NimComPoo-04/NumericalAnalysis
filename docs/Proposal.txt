@@ -1,0 +1,20 @@
+Proposal for Internship
+
+Proposal for Internship under the guidance of Prof. Diptiman Saha of St. Xaviers College Calcutta.
+This will be an Multi-Disiplinary Internship of Mathematics and Computer Science.
+
+The ultimate goal of the internship would be to understand key concepts regarding how numerical analysis software works
+under the hood and also to construct a very simple version of the numerical integration techniques used
+in these softwares.
+
+The intership is expected to span a period of 6 months from September 2024 to February 2025 in offline mode.
+
+The learning phase would involve learning about various integration methods such as trapezoidal method, simpson's rule.
+and their implementation in programming languages like C without any assistance from the modern numerical software or
+libraries. The learning phase would also include learning modern technologies such as construction of shared object files
+and position independent executables, and 3d graphics utilizing opengl.
+
+The final project would involve create a general perspose function integrator which would allow integration of any continuous
+function, proper or improper. A userinterface for this integrator. And a 3d,2d function plotter to visualize the integrated
+functions. This software would then be used to find particular values for the gamma function in the complex domain completely
+showcasing the features of the integrator.
