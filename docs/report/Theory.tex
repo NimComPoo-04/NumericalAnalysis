@@ -1,0 +1,108 @@
+\documentclass{article}
+
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{color}
+\usepackage{hyperref}
+\hypersetup{
+	colorlinks=true,
+	linktoc=all,
+	linkcolor=black
+}
+
+\begin{document}
+
+\tableofcontents
+\hypersetup{linktocpage}
+\newpage
+
+\section*{Numerical Integration}
+
+It is not always possible to compute integrals of functions analytically, so methods have been
+developed to compute values of these integrals through iterative algorithmic processes. One such
+integrals which requires assistance of a proof solver is the gamma function.
+\begin{align*}
+	&\Gamma(z) = \int^\infty_0 t^{z-1} e^{-t} dt &\forall z \in \mathbb{C}\\
+	&\Gamma(x) = (x - 1)! &\forall x \in \mathbb{N}
+\end{align*}
+
+Gamma function is very difficult to solve analytically. The value of the gamma function for the real numbers
+grows in the order of $O(n!)$, which makes it a perfect candidate for testing numerical integral software.
+In this paper we try to develop the techniques required to compute gamma function and other integrals whose
+values are hard to compute analitically.
+
+\subsection*{Functions of multiple variables and their Integrals}
+
+Functions which operate on multiple variables are generally hard to comprehend than simple scaler functions.
+The domain of the function is defined to be on multiple cartesian products of the real numbers.
+
+e.g,
+\begin{align*}
+	&f : \mathbb{R}^{n} \rightarrow \mathbb{R}^{n}\\
+	&f(x, y) = \sin(x) + \sin(y)
+\end{align*}
+
+Integrating such a function first requires that we define the bounds in terms of an equation. This would allow
+the limits of the inner integral to vary with the variable of the outer integral. The most common form of such
+a region is a rectangle which requires no modification to the original integral of an 1-variable function. However
+a circular region is also common defined with the equation.
+
+e.g,
+\begin{align*}
+	&\iint\limits_{x^2 + y^2 \le r^2} F(x, y) dA\\
+	=\quad\int^r_{-r}&\int^{\sqrt{r^2 - y^2}}_{-\sqrt{r^2 - y^2}} F(x, y) dx dy\\
+\end{align*}
+
+\subsection*{Numerical aproximation of integrals}
+
+Out of all the methods available for numerical integration we choose simpsons and trapezoidal rule. This is
+simply due to the fact that these methods are iterative in nature and provide good compromise between minimization
+of execution time and error.
+
+Let us consider a function,
+\begin{equation*}
+f : \mathbb{R} \rightarrow \mathbb{R}
+\end{equation*}
+
+Let us consider $n$ equispaced nodes such that,
+\begin{align*}
+f_i &= f(x_i) &\forall i \in \mathbb{W}, i < n\\
+h &= \frac{x_n - x_0}{n}\\
+p &= \frac{x - x_0}{h}\\
+\end{align*}
+
+Let $L$ be a function approximating function $f$,
+\begin{align*}
+\Delta f_i &= f_{i+1} - f_{i}\\
+L(x) &= \sum_{i = 0}^n \left( \frac{\Delta^i f_0}{i!} \prod_{j = 0}^i (p - j)  \right)\\
+\end{align*}
+
+%Integrating $f$ by utilizing this aproximation yeilds,
+
+Let,
+\begin{align*}
+a = max \left( x_i \right)\\
+b = min \left( x_i \right)
+\end{align*}
+
+Now,
+\begin{align*}
+\int^a_b f(x) dx &= \int^a_b L(x) dx\\
+&= \int^a_b \sum_{i = 0}^n \left( \frac{\Delta^i f_0}{i!} \prod_{j = 0}^i (p - j)  \right) dx\\
+&= \sum_{i = 0}^n \left( \frac{\Delta^i f_0}{i!} \int^a_b \prod_{j = 0}^i (p - j) dx \right)\\
+&= \sum_{i = 0}^n \left( \frac{\Delta^i f_0}{i!} \int^n_0 \prod_{j = 0}^i (p - j) dp \right)
+\end{align*}
+
+For trapezoidal rule we consider only 2 nodes,
+\begin{align*}
+&\sum_{i = 0}^2 \left( \frac{\Delta^i f_0}{i!} \int^2_0 \prod_{j = 0}^i (p - j) dp \right)\\
+=& f_0 + (f_1 - f_0) \int^2_0 p dp\\
+=& f_0 + (f_1 - f_0) \left[ \frac{p^2}{2} \right]_0^2\\
+=& f_0 + (f_1 - f_0) \cdot 2\\
+=& f_0 + 2 \cdot f_1 - 2 \cdot f_0)\\
+=& 2 \cdot f_1 - f_0)\\
+\end{align*}
+
+\subsection*{Computing Improper Integrals}
+
+\end{document}
