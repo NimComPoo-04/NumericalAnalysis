@@ -184,19 +184,54 @@ samples taken on the function.
 		\State $h \gets (e - s) / n$
 		\State $a \gets 0$\Comment{area under the curve}
 		\For{$x \gets s \text{\bf{ to }} e - h \text{\bf{ step }} h$}
-		\State $a \gets a + h \cdot Trapezoidal(x, x + h)$
+		\State $a \gets a + h \cdot Trapezoidal(f(x), f(x + h))$
 		\EndFor
 		\State \Return $a$
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
 
-This is however not very extensible since the function itself is hardcoded to operate on only a single variable. We try
-to formulate an extention by which we can reduce the number of inputs the function is operating on.
+To extend this integral to multiple variables we perform integrals on each axis at a time. Implementation of this method
+algorithmically requires us to treat inner integrals as functions which we can integrate normally.
+
 $$ g(x) = \int_a^b f(x, y) dy $$
-We utilize the expression to  extend this algorithm to multiple integrals we devise a simple concept of `context.' `context'
-reffers to an associative array which holds the value of all the variables required to compute the function. The sidesteps
-the need for positional arguments.
+
+This means that each inner integrals has access the current state of the variables of the outer integrals. We developed
+the idea of a `context' which holds values of all previously occuring integrals. In this algorithm we express this with
+the function $f^*(x)$ which essentially means that this function not only operates on variable $x$ but also has access
+to all other previous variables (now treated as constants).
+
+$$ f^*_i(x) = f(x_0, x_1, ..., x_{i-1}, x)$$
+
+Describing this as a algorithm turns the functions assuming each integrals described from outermost ($0_{th}$) to innermost ($n_{th}$) and the 
+these integrals operate in order variables from $x_0$ to $x_n$. This does not need to be case and indeed in our implementation we avoid this
+positional lockin by utilizing associative arrays for the arguments of the function instead of positional arguments. However that does not affect
+the way the algorithm oprates,
+
+\begin{algorithm}
+	\caption{Computing multiple integrals of the function $f$.}
+	\begin{algorithmic}[1]
+		\Procedure{Multi-Integral}{$l \equiv [(s, e)], f, d, c$}
+		\Statex{$l$ are the limits, $f$ is the function to be integrated}
+		\Statex{$d$ depth of recursion, $c$ reffers to the variable contexts}
+		\If{$| l | = 0$}\Comment{We do not have any more integrals}
+		\State \Return $f^*_n(x_n)$ \Comment{$x_i$ are accessed through the `context' variable $c$}
+		\Else
+		\State $h \gets (l_d.e - l_d.s) / n$
+		\State $a \gets 0$\Comment{area under the curve}
+		\For{$x_d \gets l_d.s \text{\bf{ to }} l_d.e - h \text{\bf{ step }} h$}
+
+		\State $\text{add\_context\_variable}\left( c, x_d \right)$
+		\State $r_0 \gets \text{Multi-Integral}(l, f, d + 1, c)$\Comment{inner integrals as functions}
+		\State $r_1 \gets \text{Multi-Integral}(l, f, d + 1, c)$
+		\State $\text{remove\_context\_variable}\left( c, x_d \right)$
+		\State $a \gets a + h \cdot (r_0 + r_1) / 2$\Comment{Trapezoidal rule}
+		\EndFor
+		\State \Return $a$
+		\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
 \subsection{Console Interface}
 
@@ -257,7 +292,6 @@ methods have been developed to specifically deal with these functions. Currently
 under this module is the Gamma function. We utilize the Lanczos Aproximation\cite{aa} for the gamma function to compute their values at 
 a resonably high speed and acuracy.
 
-\pagebreak
 \subsection{Examples of Function Integration and Plotting}
 
 \subsubsection{Integrating $sin(x)$ function from 0 to $\pi$\textsuperscript{\ref{fig:example1}}}
@@ -292,7 +326,8 @@ vec_t limit_end(vec_t v)
 Integrating on variable X from 0 to 3.141593.
 \end{flushleft}
 
-\begin{center}
+\begin{table}[h]
+	\centering
 	\begin{tabular}{ |c c c c c c| }
 		\hline
 		\hline
@@ -313,7 +348,7 @@ Integrating on variable X from 0 to 3.141593.
 		\hline
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 \subsubsection{Integrating $sin(x) + sin(y)$ function\textsuperscript{\ref{fig:example2}}}
 
@@ -359,7 +394,8 @@ vec_t limit_end_inner  (vec_t v)
 	Integrating on variable Y then on the inner variable X under the trianglular region with verticles $(0, 0) (1, 0) (1, 1)$
 \end{flushleft}
 
-\begin{center}
+\begin{table}[H]
+	\centering
 	\begin{tabular}{ | c c c c c c | }
 		\hline
 		\hline
@@ -376,39 +412,21 @@ vec_t limit_end_inner  (vec_t v)
 		\hline
 		5    & x & 0.000001 & 0.000000 & 0.000833 & 0.000001 \\
 		\hline
-		6    & x & 0.000001 & 0.000000 & 0.001000 & 0.000001 \\
-		\hline
-		7    & x & 0.000001 & 0.000000 & 0.001000 & 0.000001 \\
-		\hline
-		8    & x & 0.000001 & 0.000000 & 0.001167 & 0.000002 \\
-		\hline
-		9    & x & 0.000001 & 0.000000 & 0.001333 & 0.000003 \\
-		\hline
-		10   & x & 0.000002 & 0.000000 & 0.001500 & 0.000003 \\
 		\multicolumn{6}{|c|}{...} \\
-		n+1  & x & 0.000999 & 0.000000 & 0.998833 & 1.300255 \\
 		\hline
-		n+2  & x & 0.000999 & 0.000000 & 0.999000 & 1.300626 \\
+		n+1  & x & 0.001000 & 0.000000 & 0.999500 & 1.300057 \\
 		\hline
-		n+3  & x & 0.000999 & 0.000000 & 0.999000 & 1.300626 \\
+		n+2  & x & 0.001000 & 0.000000 & 0.999667 & 1.302110 \\
 		\hline
-		n+4  & x & 0.000999 & 0.000000 & 0.999167 & 1.300997 \\
+		n+3  & x & 0.001000 & 0.000000 & 0.999833 & 1.302481 \\
 		\hline
-		n+5  & x & 0.000999 & 0.000000 & 0.999333 & 1.299687 \\
+		n+4  & x & 0.001000 & 0.000000 & 1.000000 & 1.301169 \\
 		\hline
-		n+6  & x & 0.001000 & 0.000000 & 0.999500 & 1.300057 \\
-		\hline
-		n+7  & x & 0.001000 & 0.000000 & 0.999667 & 1.302110 \\
-		\hline
-		n+8  & x & 0.001000 & 0.000000 & 0.999833 & 1.302481 \\
-		\hline
-		n+9  & x & 0.001000 & 0.000000 & 1.000000 & 1.301169 \\
-		\hline
-		n+10 & y & 0.001000 & 0.000000 & 1.000000 & 0.459997 \\
+		n+5  & y & 0.001000 & 0.000000 & 1.000000 & 0.459997 \\
 		\hline
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 \begin{figure}
 	\centering
@@ -456,29 +474,13 @@ to estimate the precision of each method.
 \pagebreak
 \subsection{Computing values of the Gamma Function using the infinite product definition.}
 
-%\begin{algorithm}
-%	\caption{Computing values of the gamma function using Euler infinite product definition}
-%	\begin{algorithmic}[1]
-%		\Procedure{Gamma}{$z$}\Comment{$z$ is a complex number}
-%
-%		\State $g \gets 1 / z$
-%		\State $n \gets 1$
-%
-%		\While{$n \le 10^7 $}\Comment{$10^7$ a large number in place of $\infty$}
-%
-%		\State $a \gets 1 / \left(1 + z / n \right)$
-%		\State $b \gets \left(1 + 1 / n \right)^z$
-%
-%		\State $g \gets g a b$
-%		\State $n \gets n + 1$
-%
-%		\EndWhile
-%
-%		\State \Return $g$\Comment{result of the gamma function}
-%		\EndProcedure
-%	\end{algorithmic}
-%\end{algorithm}
-\begin{center}
+\begin{itemize}
+	\item Total Time of execution = 7.4433441162109375 seconds
+	\item Time of execution for each input = 0.9304180145263672 seconds
+\end{itemize}
+
+\begin{table}[H]
+	\centering
 	\begin{tabular}{ | c c c c | }
 		\hline
 		\hline
@@ -503,25 +505,17 @@ to estimate the precision of each method.
 		\hline
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 \subsection{Computing values of the Gamma Function using the Euler integral definition.}
 
-%\begin{algorithm}
-%	\caption{Computing values of the gamma function using Euler integral definition}
-%	\begin{algorithmic}[1]
-%		\Function{F}{$t, z$}\Comment{Function to be integrated}
-%		\State $g \gets t^{z - 1}e^{-t}$
-%		\State \Return $g$
-%		\EndFunction
-%\\
-%		\Procedure{Gamma}{$z$}\Comment{$z$ is a complex number}
-%		\State $I = \int_0^{10^7} F(t, z) dt$\Comment{Integration performed numerically}
-%		\State \Return $I$\Comment{$I$ result of integration of $F$}
-%		\EndProcedure
-%	\end{algorithmic}
-%\end{algorithm}
-\begin{center}
+\begin{itemize}
+	\item Total Time of execution = 9.676705837249756 seconds
+	\item Time of execution for each input = 1.2095882296562195 seconds
+\end{itemize}
+
+\begin{table}[H]
+	\centering
 	\begin{tabular}{ | c c c c | }
 		\hline
 		\hline
@@ -546,24 +540,30 @@ to estimate the precision of each method.
 		\hline
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 \subsection{Computing values of the Gamma Function using the Lanczos approximation.}
 
-\begin{center}
+\begin{itemize}
+	\item Total Time of execution = 0.01519465446472168 seconds
+	\item Time of execution for each input = 0.00189933180809021 seconds
+\end{itemize}
+
+\begin{table}[H]
+	\centering
 	\begin{tabular}{ | c c c c | }
 		\hline
 		\hline
 		Input & Output & Actual & Error\\
 		\hline
 		\hline
-		0.1 & -9.513508 & 9.513507698668732 & -19.027015698668734\\
+		0.1 & 9.513508 & 9.513507698668732 & 3.0133126749376515e-07\\
 		\hline
-		0.2 & -4.590844 & 4.5908437119988035 & -9.181687711998803\\
+		0.2 & 4.590844 & 4.5908437119988035 & 2.8800119622474085e-07\\
 		\hline
-		0.3 & -2.991569 & 2.991568987687591 & -5.983137987687591\\
+		0.3 & 2.991569 & 2.991568987687591 & 1.2312409314318984e-08\\
 		\hline
-		0.4 & -2.21816 & 2.2181595437576878 & -4.436319543757688\\
+		0.4 & 2.21816 & 2.2181595437576878 & 4.562423123743997e-07\\
 		\hline
 		2 & 1.0 & 1.0 & 0.0\\
 		\hline
@@ -575,13 +575,12 @@ to estimate the precision of each method.
 		\hline
 		\hline
 	\end{tabular}
-\end{center}
+\end{table}
 
 \section{Conclusion}
 
-dfkljdkljadjfaldkjf
-adklfjadlfkjlja
-aldkjadflj
+We gained a deeper understanding of how the mathemetical tools like gnu octave and mathematica work.
+We also learned about 3d plotting of functions and runtime loading of executables thanks to this project.
 
 \section{References}
 \begin{thebibliography}{2}

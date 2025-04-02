@@ -8,19 +8,225 @@ reload                                -- reloads the binary incase changes have 
 help                                  -- prints a help message
 quit                                  -- quits out of the program
 
-result = 9.513508 
+result = 0.009357 
 
-result = 4.590844 
+result = 0.009664 
 
-result = 2.991569 
+result = 0.011115 
 
-result = 2.218160 
+result = 0.014113 
 
-result = 1.000000 
+result = 0.020050 
 
-result = 1.999999 
+result = 0.033572 
 
-result = 5.999996 
+result = 0.080422 
 
-result = 23.999976 
+result = -0.847803 
+
+result = -0.093139 
+
+result = -0.060872 
+
+result = -0.053243 
+
+result = -0.054022 
+
+result = -0.061024 
+
+result = -0.076067 
+
+result = -0.106067 
+
+result = -0.174240 
+
+result = -0.409348 
+
+result = 4.230541 
+
+result = 0.455448 
+
+result = 0.291576 
+
+result = 0.249709 
+
+result = 0.247960 
+
+result = 0.273997 
+
+result = 0.333934 
+
+result = 0.455026 
+
+result = 0.730065 
+
+result = 1.674232 
+
+result = -16.879867 
+
+result = -1.771694 
+
+result = -1.105073 
+
+result = -0.921425 
+
+result = -0.890175 
+
+result = -0.956250 
+
+result = -1.132037 
+
+result = -1.497037 
+
+result = -2.328909 
+
+result = -5.173379 
+
+result = 50.470816 
+
+result = 5.120197 
+
+result = 3.083153 
+
+result = 2.478634 
+
+result = 2.305554 
+
+result = 2.381064 
+
+result = 2.705570 
+
+result = 3.428215 
+
+result = 5.100311 
+
+result = 10.812365 
+
+result = -100.436945 
+
+result = -9.677175 
+
+result = -5.518845 
+
+result = -4.188893 
+
+result = -3.665831 
+
+result = -3.547786 
+
+result = -3.760742 
+
+result = -4.422398 
+
+result = -6.069371 
+
+result = -11.785479 
+
+result = 99.432585 
+
+result = 8.612686 
+
+result = 4.359888 
+
+result = 2.890336 
+
+result = 2.162841 
+
+result = 1.738415 
+
+result = 1.466690 
+
+result = 1.282495 
+
+result = 1.153181 
+
+result = 1.060693 
+
+result = 0.994326 
+
+result = 0.947395 
+
+result = 0.915576 
+
+result = 0.896004 
+
+result = 0.886765 
+
+result = 0.886592 
+
+result = 0.894681 
+
+result = 0.910572 
+
+result = 0.934076 
+
+result = 0.965231 
+
+result = 1.004269 
+
+result = 1.051609 
+
+result = 1.107847 
+
+result = 1.173765 
+
+result = 1.250338 
+
+result = 1.338753 
+
+result = 1.440435 
+
+result = 1.557077 
+
+result = 1.690678 
+
+result = 1.843590 
+
+result = 2.018580 
+
+result = 2.218894 
+
+result = 2.448342 
+
+result = 2.711397 
+
+result = 3.013314 
+
+result = 3.360270 
+
+result = 3.759536 
+
+result = 4.219678 
+
+result = 4.750803 
+
+result = 5.364846 
+
+result = 6.075925 
+
+result = 6.900759 
+
+result = 7.859176 
+
+result = 8.974722 
+
+result = 10.275396 
+
+result = 11.794542 
+
+result = 13.571919 
+
+result = 15.655000 
+
+result = 18.100551 
+
+result = 20.976539 
+
+result = 24.364449 
+
+result = 28.362108 
+
+result = 33.087117 
+
+result = 38.681034 
 

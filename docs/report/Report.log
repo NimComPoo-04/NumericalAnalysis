@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  2 APR 2025 09:46
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  3 APR 2025 02:07
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -585,69 +585,69 @@ put line 177.
 [6 <./prototype.png>] [7] [8]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 274.
+(hyperref)                removing `math shift' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 274.
+(hyperref)                removing `math shift' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 274.
+(hyperref)                removing `math shift' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\pi' on input line 274.
+(hyperref)                removing `\pi' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 274.
+(hyperref)                removing `math shift' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 274.
+(hyperref)                removing `\mathsurround' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 274.
+(hyperref)                removing `\z@' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 274.
+(hyperref)                removing `superscript' on input line 297.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 329.
+(hyperref)                removing `math shift' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 329.
+(hyperref)                removing `math shift' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 329.
+(hyperref)                removing `\mathsurround' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 329.
+(hyperref)                removing `\z@' on input line 353.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 329.
+(hyperref)                removing `superscript' on input line 353.
 
 [9]
-<example1.png, id=241, 1005.7575pt x 1042.89626pt>
+<example1.png, id=228, 1005.7575pt x 1042.89626pt>
 File: example1.png Graphic file (type png)
 <use example1.png>
-Package pdftex.def Info: example1.png  used on input line 426.
+Package pdftex.def Info: example1.png  used on input line 433.
 (pdftex.def)             Requested size: 294.42636pt x 305.29657pt.
-<example2.png, id=242, 1005.7575pt x 1042.89626pt>
+<example2.png, id=229, 1005.7575pt x 1042.89626pt>
 File: example2.png Graphic file (type png)
 <use example2.png>
-Package pdftex.def Info: example2.png  used on input line 433.
+Package pdftex.def Info: example2.png  used on input line 440.
 (pdftex.def)             Requested size: 294.42636pt x 305.29657pt.
  [10] [11 <./example1.png> <./example2.png>]
-Overfull \hbox (0.29788pt too wide) in paragraph at lines 439--439
+Overfull \hbox (0.29788pt too wide) in paragraph at lines 446--446
 []\OT1/cmr/bx/n/17.28 Results: Com-put-ing the value of the Gamma Func-
  []
 
@@ -656,10 +656,10 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: 664FC23DC4A60689DDE62B6D28114863;5439.
  ) 
 Here is how much of TeX's memory you used:
- 14982 strings out of 477975
- 245347 string characters out of 5839281
- 1949330 words of memory out of 5000000
- 34812 multiletter control sequences out of 15000+600000
+ 14998 strings out of 477975
+ 245587 string characters out of 5839281
+ 1943330 words of memory out of 5000000
+ 34823 multiletter control sequences out of 15000+600000
  524960 words of font info for 80 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  75i,13n,77p,519b,1948s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -682,10 +682,10 @@ r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share
 /texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/
 texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/t
 exlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on Report.pdf (14 pages, 430496 bytes).
+Output written on Report.pdf (14 pages, 433042 bytes).
 PDF statistics:
- 398 PDF objects out of 1000 (max. 8388607)
- 331 compressed objects within 4 object streams
- 102 named destinations out of 1000 (max. 500000)
+ 404 PDF objects out of 1000 (max. 8388607)
+ 337 compressed objects within 4 object streams
+ 107 named destinations out of 1000 (max. 500000)
  200 words of extra memory for PDF output out of 10000 (max. 10000000)
 

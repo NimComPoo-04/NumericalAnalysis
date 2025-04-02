@@ -6,3 +6,4 @@ cmpl/*
 *.so
 *.def
 lib/*
+env

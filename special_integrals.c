@@ -81,6 +81,8 @@ vec_t Gamma(vec_t v)
 	{
 		Complex cpi = Cvalue(PI, 0);
 		prod = Cdiv(cpi, Cmul(SafeGamma(Csub(Cvalue(1, 0), z)), Csin(Cmul(cpi, z))));
+		prod.real *= -1;
+		prod.imag *= -1;
 	}
 	else
 	{
