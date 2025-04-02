@@ -1,0 +1,26 @@
+
+pointer    function_name              -- gets the location of the pointer
+list                                  -- lists all the functions
+call       function value ...         -- allows you to call the function with arguments
+integrate                             -- starts up a integration wizard to aid integration
+plot	    function                   -- launches a window for visualization graphs
+reload                                -- reloads the binary incase changes have been made
+help                                  -- prints a help message
+quit                                  -- quits out of the program
+
+result = -9.513508 0.000000 
+
+result = -4.590844 0.000000 
+
+result = -2.991569 0.000000 
+
+result = -2.218160 0.000000 
+
+result = 1.000000 0.000000 
+
+result = 2.000000 0.000000 
+
+result = 6.000000 0.000000 
+
+result = 24.000000 0.000000 
+

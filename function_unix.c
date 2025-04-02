@@ -53,7 +53,7 @@ int function_source_compile(char *name)
 		"-I", ".", "-I", "./cmpl/tinycc/include",
 		"-L", "./cmpl/tinycc",
 		name, "function.c", "object.c", "integrator.c",		// important files
-		"special_integrals.c",
+		"special_integrals.c", "gamma2.c",
 		"-lm", 0
 	};
 

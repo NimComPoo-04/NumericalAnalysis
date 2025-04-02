@@ -21,7 +21,7 @@ vec_t end(vec_t v)
 static double n = 0;
 
 FUNCTION ( X )
-vec_t func(vec_t v)
+vec_t functor(vec_t v)
 {
 	RETURN_VEC (
 			pow(v.it[0], v.it[1] + n - 1) * exp(-v.it[0])
@@ -29,12 +29,12 @@ vec_t func(vec_t v)
 }
 
 FUNCTION ( X )
-vec_t Gamma(vec_t v)
+vec_t function(vec_t v)
 {
 	n = v.it[0];
 
 	integrator_function_t f = {0};
-	f.function = func;
+	f.function = functor;
 	f.names[0][0] = 't';
 	f.count = 1;
 

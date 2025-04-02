@@ -4,11 +4,11 @@ integrate
 y
 limit_start_outer
 limit_end_outer
-
-
+1000
+1
 x
 limit_start_inner y
 limit_end_inner y
-
-
+1000
+1
 function x y

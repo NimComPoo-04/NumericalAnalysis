@@ -1,5 +1,5 @@
 #include "function.h"
-#include "special_integrals.h"
+#include "gamma2.h"
 
 FUNCTION ( )
 vec_t start(vec_t v)
@@ -19,5 +19,5 @@ vec_t end(vec_t v)
 FUNCTION ( X, Y )
 vec_t function(vec_t v)
 {
-	return Gamma(v);
+	return Gamma2(v);
 }

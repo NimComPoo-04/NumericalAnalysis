@@ -1,0 +1,73 @@
+step              variable          h                 start             end               result          
+1    X         0.031416          0.000000          3.141593          (1.999507)
+2    X         0.030800          0.000000          3.141593          (1.999526)
+3    X         0.030208          0.000000          3.141593          (1.999544)
+4    X         0.029638          0.000000          3.141593          (1.999561)
+5    X         0.029089          0.000000          3.141593          (2.000000)
+6    X         0.028560          0.000000          3.141593          (2.000000)
+#include "function.h"
+
+/* * Function here: sin(x) * Limits: 0 to PI
+ */
+ 
+FUNCTION ( X )
+vec_t function(vec_t v)
+{
+	RETURN_VEC ( sin(v.it[0]) );
+}
+
+FUNCTION ( )
+vec_t limit_start(vec_t v)
+{
+	RETURN_VEC ( 0 );
+}
+
+FUNCTION ( )
+vec_t limit_end(vec_t v)
+{
+	RETURN_VEC( PI );
+}
+#include "function.h"
+
+/* * Function here: sin(x) * Limits: 0 to PI
+ */
+ 
+FUNCTION ( X )
+vec_t function(vec_t v)
+{
+	RETURN_VEC ( sin(v.it[0]) );
+}
+
+FUNCTION ( )
+vec_t limit_start(vec_t v)
+{
+	RETURN_VEC ( 0 );
+}
+
+FUNCTION ( )
+vec_t limit_end(vec_t v)
+{
+	RETURN_VEC( PI );
+}
+#include "function.h"
+
+/* * Function here: sin(x) * Limits: 0 to PI
+ */
+ 
+FUNCTION ( X )
+vec_t function(vec_t v)
+{
+	RETURN_VEC ( sin(v.it[0]) );
+}
+
+FUNCTION ( )
+vec_t limit_start(vec_t v)
+{
+	RETURN_VEC ( 0 );
+}
+
+FUNCTION ( )
+vec_t limit_end(vec_t v)
+{
+	RETURN_VEC( PI );
+}
