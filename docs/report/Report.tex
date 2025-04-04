@@ -5,6 +5,8 @@
 \usepackage{algorithm}
 \usepackage{algpseudocode}
 
+\usepackage{enumerate}
+
 \usepackage{amsmath}
 \usepackage{xfrac}
 \usepackage{mathtools}
@@ -18,7 +20,6 @@
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 
 \title{Internship Report}
-\date{March 9, 2025}
 \author{Aanjishnu Bhattacharyya}
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
@@ -139,7 +140,7 @@ e.g,
 
 \subsection{Building an simple prototype of a function integrator and plotter.}
 
-We build a simple prototype\footnote{It is possible to access the prototype from any computer via the internet at: \url{https://nimcompoo-04.github.io/numlysis}}
+We build a simple prototype\cite{ae}
 in javascript to understand how we should aproach building the integrator software\textsuperscript{\ref{fig:prototype1}}.
 During this process we avoid using several built in features and external libraries of javascript as to undestand
 the internals of such a system and also to keep the program as light weight as possible.
@@ -236,7 +237,7 @@ the way the algorithm oprates,
 \subsection{Console Interface}
 
 The graphical user interface of the prototype was discarded in favour of a very simple console interface to improve portability of
-the software. To provide quality of life features we utilize a console input library Crossline\footnote{Crossline-1.0 Source Code and License: \url{https://github.com/JunchuanWang80/crossline}.}
+the software. To provide quality of life features we utilize a console input library Crossline\cite{ac}
 
 A part of the user input also involved accepting a C source file which contained all the function expressions. This file is used to allow runtime
 expression changing which is further discussed in the later sections.
@@ -253,7 +254,7 @@ had to be executed multiple times the cost of interpreting added up extremely qu
 the prototype, the website would sometimes stop responding due to the high integrator execution times.
 
 To address this problem it was nessesary to compile the expression down to a native binaries which would run orders
-of magnitude faster. To achieve this we utilized the very small c99 complient `tiny c compiler'\footnote{Tiny C Compiler Source and License: \url{https://bellard.org/tcc/}}.
+of magnitude faster. To achieve this we utilized the very small c99 complient `tiny c compiler'\cite{ab}.
 We spawned a process with the tcc binaries and compiled the expression C file into a Dynamic link library (or Shared Object).
 The generated executable is a Position Independent (reffered to as PIE from here). This allowed use to load this executable at runtime
 and execute the native binary version of the expressions. An important factor which allowed this was that all the expressions did not have
@@ -282,7 +283,7 @@ Values for multiple points are sampled from the function. A group of 3 adjescent
 triangles is generated. each triangle is shaded on the basis of their normal values. The shading gives a sense of depth to the plot. Each point is recomputed each
 turn of the plot. To achieve higher resolution plot the number of points sampled is increased.
 
-The triangles are displayed on the screen using the cross platform graphics library Raylib\footnote{Raylib Website: \url{httsp://www.raylib.com}}. Raylib allows a streamlined interfacing with accelerated graphics
+The triangles are displayed on the screen using the cross platform graphics library Raylib\cite{ad}. Raylib allows a streamlined interfacing with accelerated graphics
 hardware using the OpenGL API and a simple way to accept user keyboard input.
 
 \subsection{Special Functions}
@@ -443,7 +444,8 @@ vec_t limit_end_inner  (vec_t v)
 \end{figure}
 
 \pagebreak
-\section{Results: Computing the value of the Gamma Function numerically}
+\section{Results}
+\subsection{Gamma function and methods of computing it numerically} 
 
 The gamma function can be defined as,
 
@@ -471,8 +473,35 @@ measured the time for computation required to execute these algorithms when impl
 of the software we have built. We utilize the implementation of gamma function in pythons math libraries 
 to estimate the precision of each method.
 
+\begin{algorithm}
+	\caption{Iterated Product method of computing the gamma function}
+	\begin{algorithmic}[1]
+	\Procedure{Gamma}{$z$}
+	\State $g \gets 1 / z$
+	\For{$n \gets 1 \text{ \bf{to} } 10^7$}
+	\State $a \gets 1 / (1 + z/n)$
+	\State $b \gets (1 + 1/n)^z$
+	\State $g \gets a \cdot b \cdot g$
+	\EndFor
+	\State \Return $g$
+	\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+The Algorithm describing the integral solving method has been presented in section 4.1
+The "Lanczos Implementation of the Gamma Function" has been described in the paper \cite{aa}.
+
 \pagebreak
-\subsection{Computing values of the Gamma Function using the infinite product definition.}
+\subsection{Comparisn of Compute times of each method of computing Gamma Function}
+
+We perform the gamma function a small sample set of input, and time that operation. This excercise gives us a good idea on the performace of each algorithm
+on real hardware. This important because the time complexity of each method is $O(n)$.
+\\
+
+\begin{bf}
+	\flushleft
+	Compute times for the Gamma Function using the infinite product definition.
+\end{bf}
 
 \begin{itemize}
 	\item Total Time of execution = 7.4433441162109375 seconds
@@ -507,7 +536,10 @@ to estimate the precision of each method.
 	\end{tabular}
 \end{table}
 
-\subsection{Computing values of the Gamma Function using the Euler integral definition.}
+\begin{bf}
+	\flushleft
+	Compute times for the Gamma Function using the Euler integral definition.
+\end{bf}
 
 \begin{itemize}
 	\item Total Time of execution = 9.676705837249756 seconds
@@ -542,7 +574,10 @@ to estimate the precision of each method.
 	\end{tabular}
 \end{table}
 
-\subsection{Computing values of the Gamma Function using the Lanczos approximation.}
+\begin{bf}
+	\flushleft
+	Compute times for the Gamma Function using the Laconzs aproxmiation.
+\end{bf}
 
 \begin{itemize}
 	\item Total Time of execution = 0.01519465446472168 seconds
@@ -577,14 +612,44 @@ to estimate the precision of each method.
 	\end{tabular}
 \end{table}
 
+\subsection{Comparisn of Error of each method of computing Gamma Function}
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=\textwidth]{test.png}
+	\label{fig:test}
+\end{figure}
+
+From this plot and the previous execution times recorded we can understand that the Lanczos aproximation performs best in all regards.
+The integral method performs well for posetive real numbers greater than 2 but fails rapidly for the rest. The iterative method performs
+well for real numbers less than 2 and starts to fail rapidly for the rest. However the error is not extremely high given the number only 
+deviates at the order of $10^-5$.
+
+\pagebreak
 \section{Conclusion}
 
-We gained a deeper understanding of how the mathemetical tools like gnu octave and mathematica work.
-We also learned about 3d plotting of functions and runtime loading of executables thanks to this project.
+Simpsons method and trapezoidal methods provide good numerical aproximations for most situations but it may be nessesary to develop specialized
+methods in cases where they start to fail. The major points of faliure has been the rapid increase in the limits. The methods outlined perform
+well in situtation where the $h$ value is relatively small, but having a very small $h$ is highly impractical since it increases the iteration
+count rapidly.
 
 \section{References}
 \begin{thebibliography}{2}
 	\bibitem{aa} Godfrey, Paul (2001). "Lanczos Implementation of the Gamma Function" \url{http://www.numericana.com/answer/info/godfrey.htm}
+	\bibitem{ab} Bellard, Fabrice (2018). "Tiny C Compiler" \url{https://bellard.org/tcc/}.
+	\bibitem{ac} Wang, JC (2023). "Crossline" "A small, self-contained, zero-config, MIT licensed, cross-platform, readline and libedit replacement." \url{https://github.com/JunchuanWang80/crossline}.
+	\bibitem{ad} Santamaria, Ramon (2025). "Raylib" "A simple and easy-to-use library to enjoy videogames programming" \url{httsp://www.raylib.com}
 \end{thebibliography}
+
+\begin{flushleft}
+	\begin{bf}
+		\large
+		Source Code for the project
+	\end{bf}
+	\begin{itemize}
+		\item[-] Integrator Prototype : \url{https://nimcompoo-04.github.io/numlysis/}
+		\item[-] Numerical Analysis Integrator : \url{https://www.github.com/NimComPoo-04/NumericalAnalysis}
+	\end{itemize}
+\end{flushleft}
 
 \end{document}

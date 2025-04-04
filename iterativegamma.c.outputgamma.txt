@@ -8,46 +8,6 @@ reload                                -- reloads the binary incase changes have 
 help                                  -- prints a help message
 quit                                  -- quits out of the program
 
-result = 0.009357 
-
-result = 0.009664 
-
-result = 0.011115 
-
-result = 0.014113 
-
-result = 0.020050 
-
-result = 0.033572 
-
-result = 0.080422 
-
-result = -0.847803 
-
-result = -0.093139 
-
-result = -0.060872 
-
-result = -0.053243 
-
-result = -0.054022 
-
-result = -0.061024 
-
-result = -0.076067 
-
-result = -0.106067 
-
-result = -0.174240 
-
-result = -0.409348 
-
-result = 4.230541 
-
-result = 0.455448 
-
-result = 0.291576 
-
 result = 0.249709 
 
 result = 0.247960 
@@ -229,4 +189,44 @@ result = 28.362108
 result = 33.087117 
 
 result = 38.681034 
+
+result = 45.314478 
+
+result = 53.193362 
+
+result = 62.566516 
+
+result = 73.735015 
+
+result = 87.063611 
+
+result = 102.994756 
+
+result = 122.065828 
+
+result = 144.930298 
+
+result = 172.383791 
+
+result = 205.396182 
+
+result = 245.151193 
+
+result = 293.095264 
+
+result = 350.997959 
+
+result = 421.026695 
+
+result = 505.839284 
+
+result = 608.698649 
+
+result = 733.615187 
+
+result = 885.523583 
+
+result = 1070.502676 
+
+result = 1296.049093 
 

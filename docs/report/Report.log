@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  3 APR 2025 02:07
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  3 APR 2025 22:15
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -111,7 +111,11 @@ Document Style algorithmicx 1.2 - a greatly improved `algorithmic' style
 \ALG@tmplength=\skip52
 )
 Document Style - pseudocode environments for use with the `algorithmicx' style
-) (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
+) (/usr/share/texlive/texmf-dist/tex/latex/tools/enumerate.sty
+Package: enumerate 2015/07/23 v3.00 enumerate extensions (DPC)
+\@enLab=\toks22
+)
+(/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2022/04/08 v2.17n AMS math features
 \@mathmargin=\skip53
 
@@ -121,7 +125,7 @@ Package: amstext 2021/08/26 v2.01 AMS text
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks22
+\@emptytoks=\toks23
 \ex@=\dimen153
 ))
 (/usr/share/texlive/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -161,21 +165,21 @@ LaTeX Info: Redefining \Relbar on input line 971.
 \dotsspace@=\muskip16
 \c@parentequation=\count286
 \dspbrk@lvl=\count287
-\tag@help=\toks23
+\tag@help=\toks24
 \row@=\count288
 \column@=\count289
 \maxfields@=\count290
-\andhelp@=\toks24
+\andhelp@=\toks25
 \eqnshift@=\dimen156
 \alignsep@=\dimen157
 \tagshift@=\dimen158
 \tagwidth@=\dimen159
 \totwidth@=\dimen160
 \lineht@=\dimen161
-\@envbody=\toks25
+\@envbody=\toks26
 \multlinegap=\skip54
 \multlinetaggap=\skip55
-\mathdisplay@stack=\toks26
+\mathdisplay@stack=\toks27
 LaTeX Info: Redefining \[ on input line 2953.
 LaTeX Info: Redefining \] on input line 2954.
 )
@@ -450,24 +454,24 @@ Package: courier 2020/03/25 PSNFSS-v9.3 (WaS)
 ) (./Report.aux)
 \openout1 = `Report.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
-LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 26.
-LaTeX Font Info:    ... okay on input line 26.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
+LaTeX Font Info:    Checking defaults for PU/pdf/m/n on input line 27.
+LaTeX Font Info:    ... okay on input line 27.
 
 *geometry* driver: auto-detecting
 *geometry* detected driver: pdftex
@@ -511,12 +515,12 @@ LaTeX Font Info:    ... okay on input line 26.
 \scratchbox=\box61
 \nofMPsegments=\count314
 \nofMParguments=\count315
-\everyMPshowfont=\toks27
+\everyMPshowfont=\toks28
 \MPscratchCnt=\count316
 \MPscratchDim=\dimen193
 \MPnumerator=\count317
 \makeMPintoPDFobject=\count318
-\everyMPtoPDFconversion=\toks28
+\everyMPtoPDFconversion=\toks29
 ) (/usr/share/texlive/texmf-dist/tex/latex/epstopdf-pkg/epstopdf-base.sty
 Package: epstopdf-base 2020-01-24 v2.11 Base part for package epstopdf
 Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
@@ -526,7 +530,7 @@ Package epstopdf-base Info: Redefining graphics rule for `.eps' on input line 4
 File: epstopdf-sys.cfg 2010/07/13 v1.3 Configuration of (r)epstopdf for TeX Liv
 e
 ))
-Package hyperref Info: Link coloring OFF on input line 26.
+Package hyperref Info: Link coloring OFF on input line 27.
 
 (./Report.out) (./Report.out)
 \@outlinefile=\write3
@@ -534,13 +538,13 @@ Package hyperref Info: Link coloring OFF on input line 26.
 
 Package caption Info: Begin \AtBeginDocument code.
 Package caption Info: End \AtBeginDocument code.
-LaTeX Font Info:    Trying to load font information for U+msa on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msa on input line 30.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsa.fd
 File: umsa.fd 2013/01/14 v3.01 AMS symbols A
 )
-LaTeX Font Info:    Trying to load font information for U+msb on input line 29.
+LaTeX Font Info:    Trying to load font information for U+msb on input line 30.
 
 
 (/usr/share/texlive/texmf-dist/tex/latex/amsfonts/umsb.fd
@@ -553,139 +557,154 @@ File: umsb.fd 2013/01/14 v3.01 AMS symbols B
 [1
 
 {/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map}]
-Underfull \hbox (badness 10000) in paragraph at lines 52--59
+Underfull \hbox (badness 10000) in paragraph at lines 53--60
 \OT1/cmr/m/n/12 con-straints. 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--59
+Underfull \hbox (badness 10000) in paragraph at lines 53--60
 
  []
 
 
-Underfull \hbox (badness 10000) in paragraph at lines 52--59
+Underfull \hbox (badness 10000) in paragraph at lines 53--60
 
  []
 
 [2] [3] [4]
-LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 1
-42.
- (/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
-File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
-)
-<prototype.png, id=157, 1927.2pt x 966.61125pt>
+
+LaTeX Warning: Citation `ae' on page 5 undefined on input line 143.
+
+<prototype.png, id=154, 1927.2pt x 966.61125pt>
 File: prototype.png Graphic file (type png)
 <use prototype.png>
-Package pdftex.def Info: prototype.png  used on input line 161.
+Package pdftex.def Info: prototype.png  used on input line 162.
 (pdftex.def)             Requested size: 452.9679pt x 227.18317pt.
- [5]
+[5]
 Package hyperref Info: bookmark level for unknown algorithm defaults to 0 on in
-put line 177.
-
-[6 <./prototype.png>] [7] [8]
-
-Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 297.
-
+put line 178.
+ [6 <./prototype.png>] [7] [8]
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 297.
+(hyperref)                removing `math shift' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 297.
+(hyperref)                removing `math shift' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\pi' on input line 297.
+(hyperref)                removing `math shift' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 297.
+(hyperref)                removing `\pi' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 297.
+(hyperref)                removing `math shift' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 297.
+(hyperref)                removing `\mathsurround' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 297.
+(hyperref)                removing `\z@' on input line 298.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 353.
+(hyperref)                removing `superscript' on input line 298.
+
+LaTeX Font Info:    Trying to load font information for OT1+pcr on input line 3
+04.
+(/usr/share/texlive/texmf-dist/tex/latex/psnfss/ot1pcr.fd
+File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
+)
+
+Package hyperref Warning: Token not allowed in a PDF string (Unicode):
+(hyperref)                removing `math shift' on input line 354.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `math shift' on input line 353.
+(hyperref)                removing `math shift' on input line 354.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\mathsurround' on input line 353.
+(hyperref)                removing `\mathsurround' on input line 354.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `\z@' on input line 353.
+(hyperref)                removing `\z@' on input line 354.
 
 
 Package hyperref Warning: Token not allowed in a PDF string (Unicode):
-(hyperref)                removing `superscript' on input line 353.
+(hyperref)                removing `superscript' on input line 354.
 
 [9]
-<example1.png, id=228, 1005.7575pt x 1042.89626pt>
+<example1.png, id=218, 1005.7575pt x 1042.89626pt>
 File: example1.png Graphic file (type png)
 <use example1.png>
-Package pdftex.def Info: example1.png  used on input line 433.
+Package pdftex.def Info: example1.png  used on input line 434.
 (pdftex.def)             Requested size: 294.42636pt x 305.29657pt.
-<example2.png, id=229, 1005.7575pt x 1042.89626pt>
+<example2.png, id=219, 1005.7575pt x 1042.89626pt>
 File: example2.png Graphic file (type png)
 <use example2.png>
-Package pdftex.def Info: example2.png  used on input line 440.
+Package pdftex.def Info: example2.png  used on input line 441.
 (pdftex.def)             Requested size: 294.42636pt x 305.29657pt.
- [10] [11 <./example1.png> <./example2.png>]
-Overfull \hbox (0.29788pt too wide) in paragraph at lines 446--446
-[]\OT1/cmr/bx/n/17.28 Results: Com-put-ing the value of the Gamma Func-
+ [10] [11 <./example1.png> <./example2.png>] [12]
+Underfull \hbox (badness 10000) in paragraph at lines 497--500
+
  []
 
-[12] [13] [14] (./Report.aux)
+[13]
+<test.png, id=277, 722.7pt x 505.89pt>
+File: test.png Graphic file (type png)
+<use test.png>
+Package pdftex.def Info: test.png  used on input line 619.
+(pdftex.def)             Requested size: 452.9679pt x 317.0759pt.
+ [14 <./test.png>]
+Underfull \hbox (badness 1484) in paragraph at lines 640--641
+[]\OT1/cmr/m/n/12 Wang, JC (2023). "Crossline" "A small, self-contained, zero-c
+onfig, MIT li-
+ []
+
+[15] (./Report.aux)
+
+LaTeX Warning: There were undefined references.
+
 Package rerunfilecheck Info: File `Report.out' has not changed.
-(rerunfilecheck)             Checksum: 664FC23DC4A60689DDE62B6D28114863;5439.
+(rerunfilecheck)             Checksum: F3715A0E7AAE1E61960868E3F7DEC38B;4936.
  ) 
 Here is how much of TeX's memory you used:
- 14998 strings out of 477975
- 245587 string characters out of 5839281
+ 15034 strings out of 477975
+ 246326 string characters out of 5839281
  1943330 words of memory out of 5000000
- 34823 multiletter control sequences out of 15000+600000
- 524960 words of font info for 80 fonts, out of 8000000 for 9000
+ 34858 multiletter control sequences out of 15000+600000
+ 523639 words of font info for 75 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
- 75i,13n,77p,519b,1948s stack positions out of 10000i,1000n,20000p,200000b,200000s
+ 75i,13n,77p,479b,1948s stack positions out of 10000i,1000n,20000p,200000b,200000s
 {/usr/share/texlive/texmf-dist/fonts/enc/dvips/base/8r.enc} </home/nimcompoo/
-.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0700.600pk> </home/nimco
-mpoo/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk> </home/
-nimcompoo/.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm0800.600pk></u
-sr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/sha
-re/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texl
-ive/texmf-dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/t
-exmf-dist/fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-d
-ist/fonts/type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fo
-nts/type1/public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/typ
-e1/public/amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/publ
-ic/amsfonts/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsf
-onts/cm/cmr17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm
-/cmr6.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pf
-b></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></us
-r/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share
-/texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/
-texlive/texmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/t
-exlive/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on Report.pdf (14 pages, 433042 bytes).
+.texlive2022/texmf-var/fonts/pk/ljfour/jknappen/ec/tcrm1200.600pk></usr/share/t
+exlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx12.pfb></usr/share/texlive
+/texmf-dist/fonts/type1/public/amsfonts/cm/cmbx8.pfb></usr/share/texlive/texmf-
+dist/fonts/type1/public/amsfonts/cm/cmcsc10.pfb></usr/share/texlive/texmf-dist/
+fonts/type1/public/amsfonts/cm/cmex10.pfb></usr/share/texlive/texmf-dist/fonts/
+type1/public/amsfonts/cm/cmmi12.pfb></usr/share/texlive/texmf-dist/fonts/type1/
+public/amsfonts/cm/cmmi8.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/
+amsfonts/cm/cmr10.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfont
+s/cm/cmr12.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cm
+r17.pfb></usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr6.pfb>
+</usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb></usr/sh
+are/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></usr/share/te
+xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/t
+exmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/te
+xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/tex
+mf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
+Output written on Report.pdf (15 pages, 468373 bytes).
 PDF statistics:
- 404 PDF objects out of 1000 (max. 8388607)
- 337 compressed objects within 4 object streams
- 107 named destinations out of 1000 (max. 500000)
- 200 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 397 PDF objects out of 1000 (max. 8388607)
+ 335 compressed objects within 4 object streams
+ 109 named destinations out of 1000 (max. 500000)
+ 205 words of extra memory for PDF output out of 10000 (max. 10000000)
 

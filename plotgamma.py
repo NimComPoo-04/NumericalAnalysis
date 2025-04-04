@@ -20,7 +20,7 @@ def relevant(name):
 
     return np.array(output)
 
-test = np.arange(-5.69, 5.37, 0.1)
+test = np.arange(-3.69, 7.37, 0.1)
 
 inputgamma = functools.reduce(lambda a, b: a + '\n' + b, ['call function ' + str(x) for x in test])
 with open('inputgamma.txt', 'wb+') as f:
@@ -31,10 +31,20 @@ actual = list(map(math.gamma, test))
 
 lanc = relevant('gamma.c')
 iterativegamma = relevant('iterativegamma.c')
+example7 = relevant('example7.c')
 
-plt.plot(test, actual - lanc, label='Lancoz Aproximation')
-plt.plot(test, actual - iterativegamma, label='Iterative Aproximation')
-# plt.plot(test, lanc, label='Lancoz Aproximation')
-#plt.plot(test, example7 , label='Iterative Aproximation')
+plt.figure(figsize = (10, 7))
+
+plt.xlim(-3.69, 7.3)
+plt.ylim(-1E-5, 2E-5)
+
+plt.xlabel('Function input')
+plt.ylabel('Error = Aproximated - Actual')
+
+plt.plot(test, lanc - actual, label='Lancoz Aproximation', alpha=0.6)
+plt.plot(test, iterativegamma - actual, label='Iterative Aproximation', alpha=0.6)
+plt.plot(test, example7 - actual, label='Integral Aproxmiation', alpha=0.6)
+
+plt.legend(['Lancoz Aprox.', 'Iterative Aprox.', 'Integral Aprox.'])
 
 plt.savefig('test.png')
