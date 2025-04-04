@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  3 APR 2025 22:15
+This is pdfTeX, Version 3.141592653-2.6-1.40.24 (TeX Live 2022/Debian) (preloaded format=pdflatex 2025.3.31)  4 APR 2025 20:53
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -575,7 +575,7 @@ Underfull \hbox (badness 10000) in paragraph at lines 53--60
 
 LaTeX Warning: Citation `ae' on page 5 undefined on input line 143.
 
-<prototype.png, id=154, 1927.2pt x 966.61125pt>
+<prototype.png, id=156, 1927.2pt x 966.61125pt>
 File: prototype.png Graphic file (type png)
 <use prototype.png>
 Package pdftex.def Info: prototype.png  used on input line 162.
@@ -642,12 +642,12 @@ Package hyperref Warning: Token not allowed in a PDF string (Unicode):
 (hyperref)                removing `superscript' on input line 354.
 
 [9]
-<example1.png, id=218, 1005.7575pt x 1042.89626pt>
+<example1.png, id=220, 1005.7575pt x 1042.89626pt>
 File: example1.png Graphic file (type png)
 <use example1.png>
 Package pdftex.def Info: example1.png  used on input line 434.
 (pdftex.def)             Requested size: 294.42636pt x 305.29657pt.
-<example2.png, id=219, 1005.7575pt x 1042.89626pt>
+<example2.png, id=221, 1005.7575pt x 1042.89626pt>
 File: example2.png Graphic file (type png)
 <use example2.png>
 Package pdftex.def Info: example2.png  used on input line 441.
@@ -658,13 +658,13 @@ Underfull \hbox (badness 10000) in paragraph at lines 497--500
  []
 
 [13]
-<test.png, id=277, 722.7pt x 505.89pt>
+<test.png, id=279, 722.7pt x 505.89pt>
 File: test.png Graphic file (type png)
 <use test.png>
 Package pdftex.def Info: test.png  used on input line 619.
 (pdftex.def)             Requested size: 452.9679pt x 317.0759pt.
  [14 <./test.png>]
-Underfull \hbox (badness 1484) in paragraph at lines 640--641
+Underfull \hbox (badness 1484) in paragraph at lines 641--642
 []\OT1/cmr/m/n/12 Wang, JC (2023). "Crossline" "A small, self-contained, zero-c
 onfig, MIT li-
  []
@@ -677,10 +677,10 @@ Package rerunfilecheck Info: File `Report.out' has not changed.
 (rerunfilecheck)             Checksum: F3715A0E7AAE1E61960868E3F7DEC38B;4936.
  ) 
 Here is how much of TeX's memory you used:
- 15034 strings out of 477975
- 246326 string characters out of 5839281
+ 15036 strings out of 477975
+ 246337 string characters out of 5839281
  1943330 words of memory out of 5000000
- 34858 multiletter control sequences out of 15000+600000
+ 34859 multiletter control sequences out of 15000+600000
  523639 words of font info for 75 fonts, out of 8000000 for 9000
  59 hyphenation exceptions out of 8191
  75i,13n,77p,479b,1948s stack positions out of 10000i,1000n,20000p,200000b,200000s
@@ -701,10 +701,10 @@ xlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb></usr/share/texlive/t
 exmf-dist/fonts/type1/public/amsfonts/symbols/msam10.pfb></usr/share/texlive/te
 xmf-dist/fonts/type1/public/amsfonts/symbols/msbm10.pfb></usr/share/texlive/tex
 mf-dist/fonts/type1/urw/courier/ucrr8a.pfb>
-Output written on Report.pdf (15 pages, 468373 bytes).
+Output written on Report.pdf (15 pages, 471184 bytes).
 PDF statistics:
- 397 PDF objects out of 1000 (max. 8388607)
- 335 compressed objects within 4 object streams
- 109 named destinations out of 1000 (max. 500000)
+ 399 PDF objects out of 1000 (max. 8388607)
+ 337 compressed objects within 4 object streams
+ 110 named destinations out of 1000 (max. 500000)
  205 words of extra memory for PDF output out of 10000 (max. 10000000)
 

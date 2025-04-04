@@ -19,7 +19,7 @@
 
 \lstset{basicstyle=\footnotesize\ttfamily,breaklines=true}
 
-\title{Internship Report}
+\title{Visualization of improper integrals and double integrals, with connection with Gamma function and other functions.}
 \author{Aanjishnu Bhattacharyya}
 
 \renewcommand{\thefootnote}{\fnsymbol{footnote}}
@@ -50,7 +50,7 @@ In the learning phase we first develop the mathematical background required for 
 
 \subsection{Numerical Method of calculating Integrals}
 
-To compute the integrals of any function, we must first consider the problem of approximating the function.
+To compute the integrals of any function, we must first consider the problem of approximating the function\cite{bb}.
 Approximation in this context reffers to the reconstruction of a function from $n$ sampled points obtained
 from the function. This problem becomes much simpler if the sample points are spaced equally apart from eachother.
 Fortunately in our particular case we have direct access the the function itself thus it is trivial to obtain such
@@ -623,7 +623,7 @@ on real hardware. This important because the time complexity of each method is $
 From this plot and the previous execution times recorded we can understand that the Lanczos aproximation performs best in all regards.
 The integral method performs well for posetive real numbers greater than 2 but fails rapidly for the rest. The iterative method performs
 well for real numbers less than 2 and starts to fail rapidly for the rest. However the error is not extremely high given the number only 
-deviates at the order of $10^-5$.
+deviates at the order of $10^{-5}$.
 
 \pagebreak
 \section{Conclusion}
@@ -636,6 +636,7 @@ count rapidly.
 \section{References}
 \begin{thebibliography}{2}
 	\bibitem{aa} Godfrey, Paul (2001). "Lanczos Implementation of the Gamma Function" \url{http://www.numericana.com/answer/info/godfrey.htm}
+	\bibitem{bb} Brian Bradie (2006). Differentiation and Integration. A Friendly Introduction to Numerical Analysis.
 	\bibitem{ab} Bellard, Fabrice (2018). "Tiny C Compiler" \url{https://bellard.org/tcc/}.
 	\bibitem{ac} Wang, JC (2023). "Crossline" "A small, self-contained, zero-config, MIT licensed, cross-platform, readline and libedit replacement." \url{https://github.com/JunchuanWang80/crossline}.
 	\bibitem{ad} Santamaria, Ramon (2025). "Raylib" "A simple and easy-to-use library to enjoy videogames programming" \url{httsp://www.raylib.com}
